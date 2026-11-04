@@ -1,0 +1,325 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0e1412;
+  --color-panel: #141c18;
+  --color-panel-2: #1c2822;
+  --color-line: #2c3b33;
+  --color-paper: #e8efe9;
+  --color-muted: #93a89a;
+  --color-brass: #c4a574;
+  --color-danger: #d4533a;
+  --color-severe: #e08a3c;
+  --color-tertiary: #d6c36a;
+  --color-data: #6aa8d4;
+  --color-lower: #3dbe8c;
+  --font-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-card: 0.75rem;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+}
+
+.atlas-shell {
+  display: grid;
+  grid-template-columns: 23.5rem minmax(0, 1fr);
+  height: 100dvh;
+  background: var(--color-ink);
+}
+
+.atlas-panel {
+  overflow: auto;
+  border-right: 1px solid var(--color-line);
+  background: var(--color-panel);
+  padding: 1.25rem 1.15rem 2rem;
+}
+
+.atlas-head h1 {
+  margin: 0.15rem 0 0.4rem;
+  font-size: 1.85rem;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-weight: 560;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-brass);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lede,
+.fine,
+.verdict p,
+.detail p {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.lede {
+  margin: 0;
+}
+
+.search {
+  margin-top: 1rem;
+}
+
+.search label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--color-paper);
+}
+
+.search input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--color-line);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: 0.6rem;
+  padding: 0.7rem 0.75rem;
+  font: inherit;
+}
+
+.search input:focus {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 1px;
+}
+
+.results,
+.place-list,
+.toggles {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+
+.results button,
+.place-list button,
+.toggles button,
+.presets button,
+.chip {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+.results button,
+.place-list button,
+.toggles button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-align: left;
+  padding: 0.55rem 0.15rem;
+  border: 0;
+  border-bottom: 1px solid var(--color-line);
+  min-height: 2.75rem;
+}
+
+.results button small,
+.place-list button small,
+.toggles button small {
+  color: var(--color-brass);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  flex: none;
+}
+
+.place-list em {
+  display: block;
+  font-style: normal;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+}
+
+.chips,
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+}
+
+.chip,
+.presets button {
+  border: 1px solid var(--color-line);
+  background: var(--color-panel-2);
+  color: var(--color-paper);
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+  min-height: 2.4rem;
+}
+
+.chip:hover,
+.presets button:hover,
+.results button:hover,
+.place-list button:hover,
+.toggles button:hover {
+  border-color: var(--color-brass);
+  color: var(--color-brass);
+}
+
+.verdict,
+.detail {
+  margin-top: 1rem;
+  padding: 0.9rem 0.9rem 0.2rem;
+  border-radius: var(--radius-card);
+  background: var(--color-panel-2);
+  border: 1px solid var(--color-line);
+}
+
+.verdict h2,
+.detail h3,
+section h3 {
+  margin: 0.2rem 0 0.35rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  font-weight: 560;
+}
+
+.verdict ul {
+  margin: 0.4rem 0 0.8rem;
+  padding-left: 1.1rem;
+  color: var(--color-paper);
+  font-size: 0.86rem;
+}
+
+.band-worst { border-color: color-mix(in srgb, var(--color-danger) 70%, var(--color-line)); }
+.band-severe { border-color: color-mix(in srgb, var(--color-severe) 70%, var(--color-line)); }
+.band-elevated { border-color: color-mix(in srgb, var(--color-tertiary) 70%, var(--color-line)); }
+.band-lower { border-color: color-mix(in srgb, var(--color-lower) 70%, var(--color-line)); }
+.band-moderate { border-color: var(--color-line); }
+
+section { margin-top: 1.25rem; }
+
+.row-between { display: flex; justify-content: space-between; }
+
+.toggles button span { flex: 1; }
+
+.swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  display: inline-block;
+  flex: none;
+  background: var(--color-muted);
+}
+
+.swatch.danger { background: var(--color-danger); }
+.swatch.severe { background: var(--color-severe); }
+.swatch.tertiary { background: var(--color-tertiary); }
+.swatch.data { background: var(--color-data); }
+.swatch.lower { background: var(--color-lower); }
+.swatch.hollow {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--color-lower);
+}
+
+.fine { margin: 0.25rem 0 0.4rem; }
+
+.colophon { margin-top: 1.5rem; }
+
+.atlas-stage {
+  position: relative;
+  height: 100%;
+  min-height: 18rem;
+  background: var(--color-ink);
+}
+
+.atlas-map,
+.leaflet-container.atlas-map {
+  height: 100%;
+  width: 100%;
+  background: var(--color-ink);
+}
+
+.map-pending {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--color-muted);
+  padding: 1.5rem;
+}
+
+.map-legend {
+  position: absolute;
+  z-index: 500;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.8rem;
+  max-width: 28rem;
+  padding: 0.55rem 0.7rem;
+  background: color-mix(in srgb, var(--color-ink) 88%, transparent);
+  border: 1px solid var(--color-line);
+  border-radius: 0.7rem;
+  font-size: 0.75rem;
+}
+
+.map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--color-panel);
+  color: var(--color-paper);
+  box-shadow: none;
+  border-radius: 0.5rem;
+}
+
+.leaflet-popup-content {
+  margin: 0.7rem 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.leaflet-container a {
+  color: var(--color-brass);
+}
+
+@media (max-width: 860px) {
+  .atlas-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(16rem, 48dvh) minmax(0, 1fr);
+    height: 100dvh;
+  }
+
+  .atlas-stage { order: 0; }
+  .atlas-panel {
+    order: 1;
+    border-right: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .map-legend { max-width: calc(100% - 1.5rem); }
+}
