@@ -1,5 +1,7 @@
 # Clear Ground
 
+**Live:** [nuke-targets-map.vercel.app](https://nuke-targets-map.vercel.app)
+
 A relative-exposure atlas of a bad hit on the United States.
 
 It shows likely aim points (military, command, ports, energy, logistics, metros), major public data-center clusters, a simplified west-to-east fallout picture from the three Minuteman fields, and shelters the FEMA National Shelter System listed as open on 4 November 2026. Search a town or click the map. Quieter is not the same as safe.
