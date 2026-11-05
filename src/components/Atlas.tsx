@@ -289,15 +289,21 @@ export function Atlas() {
           </div>
           <div className="presets">
             <button type="button" onClick={() => setLayers(PRESETS.full)}>
-              Full exchange
+              Larger war
             </button>
             <button type="button" onClick={() => setLayers(PRESETS.counterforce)}>
-              Counterforce
+              Smaller war
             </button>
             <button type="button" onClick={() => setLayers(PRESETS.standing)}>
               Where to stand
             </button>
           </div>
+          <p className="fine">
+            A smaller war is the red points and the fallout they throw. A larger
+            war adds the cities, ports, and plants. Old public maps draw this as
+            triangles against a carpet of dots. The carpet on the plains is the
+            silo fields. Those dots are not copied here.
+          </p>
           <p className="fine">Fallout wind. The fans turn. This is not a forecast.</p>
           <div className="presets">
             {WINDS.map((item) => (
