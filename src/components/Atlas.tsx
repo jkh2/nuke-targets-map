@@ -329,36 +329,40 @@ export function Atlas() {
         </section>
 
         <section>
-          <h3>The order of a strike</h3>
+          <h3>Why a place is on the map</h3>
           <p className="fine">
-            Someone thinking clearly does not start with the biggest cities. The
-            first job is to take away the weapons that can still be fired, and the
-            radios that tell them to fire.
+            The biggest cities are not the first thing this map cares about. A
+            place is listed because of what it means for the person standing near
+            it. This is for reading your own ground. It is not a plan.
           </p>
           <ol className="strike-order">
             <li>
-              <strong>What can still shoot back.</strong> The missile fields, the
-              two ballistic-missile submarine bases, the bomber bases, the command
-              posts, and the radios that reach submarines. These are the red aim
-              points. The silos are buried, so the bursts are on the ground, and
-              ground bursts throw the long fallout.
+              <strong>Near something that can still shoot back.</strong> The red
+              points are missile fields, the two ballistic-missile submarine
+              bases, bomber bases, command posts, and the radios that reach
+              submarines. If you live near one, you are near an opening-strike
+              site. The silos are buried, so bursts there are on the ground, and
+              ground bursts are the long fallout. That is why the fans start at
+              the missile fields, not at the cities.
             </li>
             <li>
-              <strong>The plants that build the next arsenal.</strong> Los Alamos,
+              <strong>Near a plant that builds weapons.</strong> Los Alamos,
               Livermore, Oak Ridge, Savannah River, Hanford, the Kansas City
-              weapons plant, and Pantex. Catching the missiles in their silos
-              matters less if these are left standing.
+              weapons plant, and Pantex. These are not cities. They are on the
+              map so a town next to one is not scored as quiet.
             </li>
             <li>
-              <strong>The forces and the ports for the next month.</strong> The
-              large Army and Marine posts, the airlift bases, the Port of New York
-              and New Jersey, and dams that cannot be replaced quickly.
+              <strong>Near a base, a port, or a dam.</strong> Large Army and
+              Marine posts, airlift bases, the Port of New York and New Jersey,
+              and dams that cannot be replaced quickly. Close to one of these is
+              a different problem from living downwind of a missile field.
             </li>
             <li>
-              <strong>Cities, and only later.</strong> New York, Los Angeles,
-              Chicago, and the others are what you hit if the aim has become
-              breaking the country, not disarming it. That is the city layer. It
-              is not the opening move.
+              <strong>In a city, which is the later picture.</strong> New York,
+              Los Angeles, Chicago, and the other city markers are not the
+              opening picture. Living in one is quiet if a strike stays on the
+              weapons. It is a poor bet if the war has become an attempt to break
+              the country.
             </li>
           </ol>
         </section>
