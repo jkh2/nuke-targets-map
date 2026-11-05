@@ -39,7 +39,7 @@ const COPY: Record<Band, { title: string; summary: string }> = {
   severe: {
     title: "Severe fallout ground",
     summary:
-      "Not necessarily the aim point, but inside the heavy fallout picture when the wind blows west to east, which it usually does. The danger arrives after the flashes, and it can last days.",
+      "Not necessarily the aim point, but inside the heavy fallout picture for the usual upper wind, which is from the west or west-northwest. The dust goes east to east-southeast. The danger arrives after the flashes, and it can last days.",
   },
   elevated: {
     title: "Elevated",

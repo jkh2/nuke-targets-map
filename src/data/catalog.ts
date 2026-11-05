@@ -3371,6 +3371,227 @@ export const catalog: Catalog = {
       "lon": -83.0458,
       "multiple": true,
       "notes": "Large population center missing from the source list, so a reading here was calmer than this list's own logic. Treated as a later city target, not an opening-strike silo."
+    },
+    {
+      "id": "t262",
+      "priority": "Secondary",
+      "name": "Los Alamos National Laboratory",
+      "category": "Nuclear weapons laboratory",
+      "city": "Los Alamos",
+      "county": "Los Alamos County",
+      "state": "NM",
+      "lat": 35.875,
+      "lon": -106.308,
+      "multiple": false,
+      "notes": "Public laboratory where nuclear weapons are designed. It matters if the aim is to stop the country rebuilding an arsenal, not only to catch missiles in their silos."
+    },
+    {
+      "id": "t263",
+      "priority": "Secondary",
+      "name": "Y-12 National Security Complex",
+      "category": "Nuclear weapons plant",
+      "city": "Oak Ridge",
+      "county": "Anderson County",
+      "state": "TN",
+      "lat": 35.989,
+      "lon": -84.256,
+      "multiple": false,
+      "notes": "Public plant in Oak Ridge that works uranium parts for nuclear weapons."
+    },
+    {
+      "id": "t264",
+      "priority": "Secondary",
+      "name": "Savannah River Site",
+      "category": "Nuclear materials site",
+      "city": "Aiken",
+      "county": "Aiken County",
+      "state": "SC",
+      "lat": 33.343,
+      "lon": -81.741,
+      "multiple": false,
+      "notes": "Public site that has handled the tritium and materials side of the weapons complex."
+    },
+    {
+      "id": "t265",
+      "priority": "Secondary",
+      "name": "Lawrence Livermore National Laboratory",
+      "category": "Nuclear weapons laboratory",
+      "city": "Livermore",
+      "county": "Alameda County",
+      "state": "CA",
+      "lat": 37.687,
+      "lon": -121.705,
+      "multiple": false,
+      "notes": "Public weapons-design laboratory in the Bay Area, separate from the Santa Clara data centers."
+    },
+    {
+      "id": "t266",
+      "priority": "Secondary",
+      "name": "Hanford Site",
+      "category": "Nuclear materials site",
+      "city": "Richland",
+      "county": "Benton County",
+      "state": "WA",
+      "lat": 46.55,
+      "lon": -119.49,
+      "multiple": false,
+      "notes": "Public former plutonium works on the Columbia. Still a large nuclear site, not a missile field."
+    },
+    {
+      "id": "t267",
+      "priority": "Secondary",
+      "name": "Kansas City National Security Campus",
+      "category": "Nuclear weapons components",
+      "city": "Kansas City",
+      "county": "Jackson County",
+      "state": "MO",
+      "lat": 38.961,
+      "lon": -94.508,
+      "multiple": false,
+      "notes": "Public plant that builds the non-nuclear parts of nuclear weapons."
+    },
+    {
+      "id": "t268",
+      "priority": "Secondary",
+      "name": "Fort Campbell",
+      "category": "Army mobilization hub",
+      "city": "Fort Campbell",
+      "county": "Christian County",
+      "state": "KY",
+      "lat": 36.654,
+      "lon": -87.461,
+      "multiple": false,
+      "notes": "Public home of the 101st Airborne. A second-wave ground-force post, not an opening-strike silo."
+    },
+    {
+      "id": "t269",
+      "priority": "Secondary",
+      "name": "Fort Riley",
+      "category": "Army mobilization hub",
+      "city": "Junction City",
+      "county": "Geary County",
+      "state": "KS",
+      "lat": 39.088,
+      "lon": -96.814,
+      "multiple": false,
+      "notes": "Public Army post on the Kansas plains, between the Warren fallout sector and Kansas City."
+    },
+    {
+      "id": "t270",
+      "priority": "Secondary",
+      "name": "Fort Knox",
+      "category": "Army post",
+      "city": "Fort Knox",
+      "county": "Hardin County",
+      "state": "KY",
+      "lat": 37.891,
+      "lon": -85.963,
+      "multiple": false,
+      "notes": "Public armor post. Listed as a force hub, not because of the bullion vault."
+    },
+    {
+      "id": "t271",
+      "priority": "Secondary",
+      "name": "Fort Eisenhower",
+      "category": "Army mobilization hub",
+      "city": "Augusta",
+      "county": "Richmond County",
+      "state": "GA",
+      "lat": 33.42,
+      "lon": -82.14,
+      "multiple": false,
+      "notes": "Formerly Fort Gordon. Public Army post and cyber school south of the Savannah River Site."
+    },
+    {
+      "id": "t272",
+      "priority": "Secondary",
+      "name": "Fort Moore",
+      "category": "Army mobilization hub",
+      "city": "Columbus",
+      "county": "Muscogee County",
+      "state": "GA",
+      "lat": 32.366,
+      "lon": -84.869,
+      "multiple": false,
+      "notes": "Formerly Fort Benning. Public infantry post."
+    },
+    {
+      "id": "t273",
+      "priority": "Secondary",
+      "name": "Fort Bliss",
+      "category": "Army mobilization hub",
+      "city": "El Paso",
+      "county": "El Paso County",
+      "state": "TX",
+      "lat": 31.813,
+      "lon": -106.424,
+      "multiple": false,
+      "notes": "Public Army post and air-defense center on the Rio Grande."
+    },
+    {
+      "id": "t274",
+      "priority": "Secondary",
+      "name": "Camp Lejeune",
+      "category": "Marine Corps base",
+      "city": "Jacksonville",
+      "county": "Onslow County",
+      "state": "NC",
+      "lat": 34.654,
+      "lon": -77.326,
+      "multiple": false,
+      "notes": "Public Marine base on the North Carolina coast. A second-wave force hub."
+    },
+    {
+      "id": "t275",
+      "priority": "Secondary",
+      "name": "Joint Base Charleston",
+      "category": "Strategic airlift",
+      "city": "Charleston",
+      "county": "Charleston County",
+      "state": "SC",
+      "lat": 32.898,
+      "lon": -80.04,
+      "multiple": false,
+      "notes": "Public airlift base beside an already listed port. The port and the runway are different things."
+    },
+    {
+      "id": "t276",
+      "priority": "Secondary",
+      "name": "Grand Coulee Dam",
+      "category": "Power infrastructure node",
+      "city": "Coulee Dam",
+      "county": "Grant County",
+      "state": "WA",
+      "lat": 47.957,
+      "lon": -118.982,
+      "multiple": false,
+      "notes": "Largest dam on the Columbia and one of the country's biggest power sources. Hard to replace. Not a missile field."
+    },
+    {
+      "id": "t277",
+      "priority": "Secondary",
+      "name": "Glen Canyon Dam",
+      "category": "Power infrastructure node",
+      "city": "Page",
+      "county": "Coconino County",
+      "state": "AZ",
+      "lat": 36.937,
+      "lon": -111.484,
+      "multiple": false,
+      "notes": "Public dam holding Lake Powell. A power and water node on the Colorado, not a confirmed aim point."
+    },
+    {
+      "id": "t278",
+      "priority": "Secondary",
+      "name": "Port of New York and New Jersey",
+      "category": "Major Port",
+      "city": "Elizabeth",
+      "county": "Union County",
+      "state": "NJ",
+      "lat": 40.67,
+      "lon": -74.075,
+      "multiple": false,
+      "notes": "Largest port complex on the East Coast. A logistics target in a long war. Newark airport is a separate marker nearby."
     }
   ],
   "shelters": [
@@ -4455,203 +4676,179 @@ export const catalog: Catalog = {
       "name": "Downwind of Malmstrom",
       "band": "severe",
       "kind": "fallout",
-      "why": "Simplified plume if upper winds blow west to east, which they usually do. Eastern Montana into the Dakotas can take heavy fallout from ground bursts on the Malmstrom field. A north or south wind moves this band.",
+      "why": "Most probable fallout from ground bursts on the Malmstrom field. Upper winds over Montana are from the west or west-northwest on most days, strongest in winter, so the heavy dust goes east to east-southeast across the Dakotas. Pierre, Sioux Falls, and Fargo sit in this sector. Minneapolis is downwind of Minot on the same wind. A north or south wind on the day moves it. This is the usual pattern, not a forecast.",
       "ring": [
         [
-          46.9,
-          -98.0
+          47.5322,
+          -110.5213
         ],
         [
-          47.2133,
-          -98.053
+          47.5917,
+          -109.1754
         ],
         [
-          47.5212,
-          -98.2113
+          47.6557,
+          -108.0093
         ],
         [
-          47.8184,
-          -98.4719
+          47.7286,
+          -106.9022
         ],
         [
-          48.1,
-          -98.8306
+          47.8111,
+          -105.8313
         ],
         [
-          48.361,
-          -99.2812
+          47.9034,
+          -104.7865
         ],
         [
-          48.5971,
-          -99.8159
+          48.0056,
+          -103.7614
         ],
         [
-          48.804,
-          -100.4257
+          48.1179,
+          -102.7524
         ],
         [
-          48.9785,
-          -101.1
+          48.2402,
+          -101.7565
         ],
         [
-          49.1173,
-          -101.8274
+          48.3724,
+          -100.7717
         ],
         [
-          49.2182,
-          -102.5953
+          48.5146,
+          -99.7964
         ],
         [
-          49.2795,
-          -103.3907
+          48.6668,
+          -98.8292
         ],
         [
-          49.3,
-          -104.2
+          48.8287,
+          -97.8691
         ],
         [
-          49.2795,
-          -105.0093
+          49.0005,
+          -96.9151
         ],
         [
-          49.2182,
-          -105.8047
+          49.1820,
+          -95.9665
         ],
         [
-          49.1173,
-          -106.5726
+          49.3731,
+          -95.0225
         ],
         [
-          48.9785,
-          -107.3
+          49.5738,
+          -94.0825
         ],
         [
-          48.804,
-          -107.9743
+          49.7840,
+          -93.1460
         ],
         [
-          48.5971,
-          -108.5841
+          50.0036,
+          -92.2125
         ],
         [
-          48.361,
-          -109.1188
+          50.2325,
+          -91.2813
         ],
         [
-          48.1,
-          -109.5694
+          50.4706,
+          -90.3522
         ],
         [
-          47.8184,
-          -109.9281
+          37.6649,
+          -97.7052
         ],
         [
-          47.5212,
-          -110.1887
+          38.2504,
+          -98.0296
         ],
         [
-          47.2133,
-          -110.347
+          38.8279,
+          -98.3806
         ],
         [
-          46.9,
-          -110.4
+          39.3969,
+          -98.7589
         ],
         [
-          46.5867,
-          -110.347
+          39.9569,
+          -99.1652
         ],
         [
-          46.2788,
-          -110.1887
+          40.5074,
+          -99.6002
         ],
         [
-          45.9816,
-          -109.9281
+          41.0478,
+          -100.0647
         ],
         [
-          45.7,
-          -109.5694
+          41.5776,
+          -100.5595
         ],
         [
-          45.439,
-          -109.1188
+          42.0963,
+          -101.0854
         ],
         [
-          45.2029,
-          -108.5841
+          42.6033,
+          -101.6432
         ],
         [
-          44.996,
-          -107.9743
+          43.0980,
+          -102.2341
         ],
         [
-          44.8215,
-          -107.3
+          43.5799,
+          -102.8591
         ],
         [
-          44.6827,
-          -106.5726
+          44.0484,
+          -103.5195
         ],
         [
-          44.5818,
-          -105.8047
+          44.5030,
+          -104.2168
         ],
         [
-          44.5205,
-          -105.0093
+          44.9433,
+          -104.9529
         ],
         [
-          44.5,
-          -104.2
+          45.3689,
+          -105.7304
         ],
         [
-          44.5205,
-          -103.3907
+          45.7796,
+          -106.5527
         ],
         [
-          44.5818,
-          -102.5953
+          46.1758,
+          -107.4254
         ],
         [
-          44.6827,
-          -101.8274
+          46.5586,
+          -108.3580
         ],
         [
-          44.8215,
-          -101.1
+          46.9322,
+          -109.3715
         ],
         [
-          44.996,
-          -100.4257
+          47.3258,
+          -110.5777
         ],
         [
-          45.2029,
-          -99.8159
-        ],
-        [
-          45.439,
-          -99.2812
-        ],
-        [
-          45.7,
-          -98.8306
-        ],
-        [
-          45.9816,
-          -98.4719
-        ],
-        [
-          46.2788,
-          -98.2113
-        ],
-        [
-          46.5867,
-          -98.053
-        ],
-        [
-          46.9,
-          -98.0
+          47.5322,
+          -110.5213
         ]
       ]
     },
@@ -4660,203 +4857,179 @@ export const catalog: Catalog = {
       "name": "Downwind of Minot",
       "band": "severe",
       "kind": "fallout",
-      "why": "The usual worst corridor east of Minot: eastern North Dakota, northern South Dakota, Minnesota, and into Wisconsin. This is why 'midwest' is not a shelter just because a town has no silo.",
+      "why": "Most probable fallout from ground bursts on the Minot field. The same west to west-northwest wind carries it across eastern North Dakota into Minnesota. The southern shoulder reaches eastern South Dakota. Farther east, into Wisconsin, is the long tip of a strong winter wind, not a sure thing.",
       "ring": [
         [
-          46.6,
-          -87.0
+          48.3474,
+          -100.6695
         ],
         [
-          46.9394,
-          -87.0642
+          48.2705,
+          -99.8290
         ],
         [
-          47.2729,
-          -87.2556
+          48.2148,
+          -99.0995
         ],
         [
-          47.595,
-          -87.5709
+          48.1720,
+          -98.4059
         ],
         [
-          47.9,
-          -88.0048
+          48.1405,
+          -97.7340
         ],
         [
-          48.1828,
-          -88.5498
+          48.1193,
+          -97.0776
         ],
         [
-          48.4385,
-          -89.1967
+          48.1080,
+          -96.4329
         ],
         [
-          48.6627,
-          -89.9343
+          48.1063,
+          -95.7977
         ],
         [
-          48.8517,
-          -90.75
+          48.1138,
+          -95.1704
         ],
         [
-          49.0021,
-          -91.6299
+          48.1304,
+          -94.5496
         ],
         [
-          49.1114,
-          -92.5589
+          48.1559,
+          -93.9347
         ],
         [
-          49.1778,
-          -93.5211
+          48.1902,
+          -93.3248
         ],
         [
-          49.2,
-          -94.5
+          48.2332,
+          -92.7195
         ],
         [
-          49.1778,
-          -95.4789
+          48.2847,
+          -92.1183
         ],
         [
-          49.1114,
-          -96.4411
+          48.3446,
+          -91.5208
         ],
         [
-          49.0021,
-          -97.3701
+          48.4129,
+          -90.9267
         ],
         [
-          48.8517,
-          -98.25
+          48.4895,
+          -90.3358
         ],
         [
-          48.6627,
-          -99.0657
+          48.5743,
+          -89.7480
         ],
         [
-          48.4385,
-          -99.8033
+          48.6673,
+          -89.1629
         ],
         [
-          48.1828,
-          -100.4502
+          48.7683,
+          -88.5804
         ],
         [
-          47.9,
-          -100.9952
+          48.8773,
+          -88.0005
         ],
         [
-          47.595,
-          -101.4291
+          41.2248,
+          -94.1339
         ],
         [
-          47.2729,
-          -101.7444
+          41.6079,
+          -94.2728
         ],
         [
-          46.9394,
-          -101.9358
+          41.9880,
+          -94.4282
         ],
         [
-          46.6,
-          -102.0
+          42.3648,
+          -94.6004
         ],
         [
-          46.2606,
-          -101.9358
+          42.7380,
+          -94.7898
         ],
         [
-          45.9271,
-          -101.7444
+          43.1074,
+          -94.9967
         ],
         [
-          45.605,
-          -101.4291
+          43.4729,
+          -95.2216
         ],
         [
-          45.3,
-          -100.9952
+          43.8341,
+          -95.4649
         ],
         [
-          45.0172,
-          -100.4502
+          44.1910,
+          -95.7270
         ],
         [
-          44.7615,
-          -99.8033
+          44.5432,
+          -96.0085
         ],
         [
-          44.5373,
-          -99.0657
+          44.8906,
+          -96.3100
         ],
         [
-          44.3483,
-          -98.25
+          45.2331,
+          -96.6320
         ],
         [
-          44.1979,
-          -97.3701
+          45.5705,
+          -96.9754
         ],
         [
-          44.0886,
-          -96.4411
+          45.9027,
+          -97.3412
         ],
         [
-          44.0222,
-          -95.4789
+          46.2298,
+          -97.7304
         ],
         [
-          44.0,
-          -94.5
+          46.5519,
+          -98.1446
         ],
         [
-          44.0222,
-          -93.5211
+          46.8693,
+          -98.5861
         ],
         [
-          44.0886,
-          -92.5589
+          47.1830,
+          -99.0580
         ],
         [
-          44.1979,
-          -91.6299
+          47.4946,
+          -99.5661
         ],
         [
-          44.3483,
-          -90.75
+          47.8087,
+          -100.1224
         ],
         [
-          44.5373,
-          -89.9343
+          48.1534,
+          -100.7900
         ],
         [
-          44.7615,
-          -89.1967
-        ],
-        [
-          45.0172,
-          -88.5498
-        ],
-        [
-          45.3,
-          -88.0048
-        ],
-        [
-          45.605,
-          -87.5709
-        ],
-        [
-          45.9271,
-          -87.2556
-        ],
-        [
-          46.2606,
-          -87.0642
-        ],
-        [
-          46.6,
-          -87.0
+          48.3474,
+          -100.6695
         ]
       ]
     },
@@ -4865,203 +5038,179 @@ export const catalog: Catalog = {
       "name": "Downwind of Warren",
       "band": "severe",
       "kind": "fallout",
-      "why": "Fallout from the Warren field tends to run east across Nebraska and Iowa, sometimes northern Kansas and northern Missouri. Omaha sits in this picture twice: command target and downwind.",
+      "why": "Most probable fallout from ground bursts on the Warren field. The usual upper wind takes it east across Nebraska and Iowa, with an east-southeast shoulder across northern Kansas and Kansas City. Omaha is in this picture as well as being a command site. Chicago and St. Louis are beyond the heavy part of the usual sector.",
       "ring": [
         [
-          41.3,
-          -89.0
+          41.1969,
+          -104.2277
         ],
         [
-          41.5872,
-          -89.0616
+          41.2921,
+          -103.3491
         ],
         [
-          41.8694,
-          -89.2453
+          41.3878,
+          -102.5894
         ],
         [
-          42.1419,
-          -89.5481
+          41.4908,
+          -101.8698
         ],
         [
-          42.4,
-          -89.9646
+          41.6022,
+          -101.1756
         ],
         [
-          42.6393,
-          -90.4879
+          41.7225,
+          -100.5002
         ],
         [
-          42.8556,
-          -91.1088
+          41.8517,
+          -99.8398
         ],
         [
-          43.0454,
-          -91.8169
+          41.9900,
+          -99.1918
         ],
         [
-          43.2053,
-          -92.6
+          42.1375,
+          -98.5548
         ],
         [
-          43.3325,
-          -93.4447
+          42.2940,
+          -97.9274
         ],
         [
-          43.425,
-          -94.3365
+          42.4596,
+          -97.3088
         ],
         [
-          43.4812,
-          -95.2602
+          42.6342,
+          -96.6982
         ],
         [
-          43.5,
-          -96.2
+          42.8179,
+          -96.0951
         ],
         [
-          43.4812,
-          -97.1398
+          43.0104,
+          -95.4991
         ],
         [
-          43.425,
-          -98.0635
+          43.2119,
+          -94.9098
         ],
         [
-          43.3325,
-          -98.9553
+          43.4222,
+          -94.3270
         ],
         [
-          43.2053,
-          -99.8
+          43.6412,
+          -93.7503
         ],
         [
-          43.0454,
-          -100.5831
+          43.8690,
+          -93.1797
         ],
         [
-          42.8556,
-          -101.2912
+          44.1054,
+          -92.6149
         ],
         [
-          42.6393,
-          -101.9121
+          44.3504,
+          -92.0558
         ],
         [
-          42.4,
-          -102.4354
+          44.6038,
+          -91.5024
         ],
         [
-          42.1419,
-          -102.8519
+          34.5926,
+          -94.6582
         ],
         [
-          41.8694,
-          -103.1547
+          34.9980,
+          -94.9460
         ],
         [
-          41.5872,
-          -103.3384
+          35.3961,
+          -95.2508
         ],
         [
-          41.3,
-          -103.4
+          35.7864,
+          -95.5731
         ],
         [
-          41.0128,
-          -103.3384
+          36.1687,
+          -95.9129
         ],
         [
-          40.7306,
-          -103.1547
+          36.5426,
+          -96.2704
         ],
         [
-          40.4581,
-          -102.8519
+          36.9079,
+          -96.6460
         ],
         [
-          40.2,
-          -102.4354
+          37.2642,
+          -97.0398
         ],
         [
-          39.9607,
-          -101.9121
+          37.6112,
+          -97.4522
         ],
         [
-          39.7444,
-          -101.2912
+          37.9485,
+          -97.8835
         ],
         [
-          39.5546,
-          -100.5831
+          38.2759,
+          -98.3341
         ],
         [
-          39.3947,
-          -99.8
+          38.5930,
+          -98.8044
         ],
         [
-          39.2675,
-          -98.9553
+          38.8996,
+          -99.2950
         ],
         [
-          39.175,
-          -98.0635
+          39.1953,
+          -99.8067
         ],
         [
-          39.1188,
-          -97.1398
+          39.4801,
+          -100.3405
         ],
         [
-          39.1,
-          -96.2
+          39.7537,
+          -100.8979
         ],
         [
-          39.1188,
-          -95.2602
+          40.0162,
+          -101.4810
         ],
         [
-          39.175,
-          -94.3365
+          40.2678,
+          -102.0932
         ],
         [
-          39.2675,
-          -93.4447
+          40.5093,
+          -102.7408
         ],
         [
-          39.3947,
-          -92.6
+          40.7434,
+          -103.4376
         ],
         [
-          39.5546,
-          -91.8169
+          40.9882,
+          -104.2587
         ],
         [
-          39.7444,
-          -91.1088
-        ],
-        [
-          39.9607,
-          -90.4879
-        ],
-        [
-          40.2,
-          -89.9646
-        ],
-        [
-          40.4581,
-          -89.5481
-        ],
-        [
-          40.7306,
-          -89.2453
-        ],
-        [
-          41.0128,
-          -89.0616
-        ],
-        [
-          41.3,
-          -89.0
+          41.1969,
+          -104.2277
         ]
       ]
     },
