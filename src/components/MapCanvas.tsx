@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import {
   CircleMarker,
-  GeoJSON,
   MapContainer,
   Polygon,
   Popup,
@@ -9,11 +8,10 @@ import {
   useMapEvents,
   ZoomControl,
 } from "react-leaflet";
-import type { FeatureCollection } from "geojson";
 import { catalog } from "@/data/catalog";
-import states from "@/data/us-states.json";
 import type { Layers, Picked } from "@/data/types";
 import { mapInk } from "@/lib/tokens";
+import { BasemapLayers } from "./BasemapLayers";
 import "leaflet/dist/leaflet.css";
 
 export type Focus = { lat: number; lon: number; zoom: number; n: number };
@@ -86,16 +84,7 @@ export function MapCanvas({ layers, focus, onPick, onLand }: Props) {
       className="atlas-map"
     >
       <Wake />
-      <GeoJSON
-        data={states as FeatureCollection}
-        style={{
-          color: "#3d4f44",
-          weight: 1,
-          fillColor: "#1b2822",
-          fillOpacity: 1,
-        }}
-        interactive={false}
-      />
+      <BasemapLayers />
       <ZoomControl position="bottomright" />
       <Fly focus={focus} />
       <LandClick onLand={onLand} />

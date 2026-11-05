@@ -8,7 +8,19 @@ It shows likely aim points (military, command, ports, energy, logistics, metros)
 
 This is an open-source planning picture, not a prediction and not official guidance. The United States does not publish a standing public fallout-shelter network. The green rings are ordinary disaster shelters, not bunkers.
 
-## Run it
+## Map backgrounds
+
+Use **Map background** in the map's upper-right corner to switch between:
+
+- **Topographic · USGS** (default): terrain relief, place names, and topographic reference mapping.
+- **Satellite / aerial · USGS**: The National Map's imagery background, combining satellite imagery at broad scales and aerial photography where available.
+- **Outline · no imagery**: the original state-outline background, which does not request external imagery tiles.
+
+State outlines are transparent over imagery and topographic tiles so the background stays visible. Switching backgrounds keeps the current map position and overlay selection. If tiles fail, the map displays a notice and Outline remains available.
+
+Sources: [USGS Topo](https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer) and [USGS Imagery Only](https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer). Imagery is historical, not live. Capture dates, resolution, and coverage vary by location; a service refresh date is not an image capture date. These backgrounds do not validate any of the atlas's scenario assumptions or establish road passability or shelter access.
+
+## Run locally
 
 ```bash
 npm install
