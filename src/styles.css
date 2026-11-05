@@ -344,7 +344,7 @@ section { margin-top: 1.25rem; }
   outline-offset: 3px;
 }
 
-.atlas-map .leaflet-control-attribution {
+.leaflet-container.atlas-map .leaflet-control-attribution {
   max-width: 70%;
   background: #141c18ed;
   color: var(--color-paper);
