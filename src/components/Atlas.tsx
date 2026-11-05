@@ -37,12 +37,14 @@ const PRESETS = {
 } satisfies Record<string, Layers>;
 
 const SUGGESTED = [
-  ["New York", "NY"],
-  ["Los Angeles", "CA"],
+  ["Alamosa", "CO"],
+  ["Atlanta", "GA"],
+  ["South Bend", "IN"],
+  ["Kalamazoo", "MI"],
+  ["Cincinnati", "OH"],
+  ["Chattanooga", "TN"],
   ["Chicago", "IL"],
-  ["Houston", "TX"],
-  ["Great Falls", "MT"],
-  ["Seattle", "WA"],
+  ["New York", "NY"],
 ] as const;
 
 function bandClass(band: Assessment["band"]): string {

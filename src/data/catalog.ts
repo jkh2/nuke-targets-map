@@ -7455,6 +7455,96 @@ export const catalog: Catalog = {
       "state": "HI",
       "lat": 19.7297,
       "lon": -155.09
+    },
+    {
+      "name": "South Bend",
+      "state": "IN",
+      "lat": 41.6764,
+      "lon": -86.252
+    },
+    {
+      "name": "Gary",
+      "state": "IN",
+      "lat": 41.5934,
+      "lon": -87.3464
+    },
+    {
+      "name": "Elkhart",
+      "state": "IN",
+      "lat": 41.6819,
+      "lon": -85.9767
+    },
+    {
+      "name": "Michigan City",
+      "state": "IN",
+      "lat": 41.7075,
+      "lon": -86.895
+    },
+    {
+      "name": "Kalamazoo",
+      "state": "MI",
+      "lat": 42.2917,
+      "lon": -85.5872
+    },
+    {
+      "name": "Benton Harbor",
+      "state": "MI",
+      "lat": 42.1167,
+      "lon": -86.4542
+    },
+    {
+      "name": "Niles",
+      "state": "MI",
+      "lat": 41.8298,
+      "lon": -86.2542
+    },
+    {
+      "name": "Grand Rapids",
+      "state": "MI",
+      "lat": 42.9634,
+      "lon": -85.6681
+    },
+    {
+      "name": "Cincinnati",
+      "state": "OH",
+      "lat": 39.1031,
+      "lon": -84.512
+    },
+    {
+      "name": "Dayton",
+      "state": "OH",
+      "lat": 39.7589,
+      "lon": -84.1916
+    },
+    {
+      "name": "Lexington",
+      "state": "KY",
+      "lat": 38.0406,
+      "lon": -84.5037
+    },
+    {
+      "name": "Chattanooga",
+      "state": "TN",
+      "lat": 35.0456,
+      "lon": -85.3097
+    },
+    {
+      "name": "Birmingham",
+      "state": "AL",
+      "lat": 33.5207,
+      "lon": -86.8025
+    },
+    {
+      "name": "Macon",
+      "state": "GA",
+      "lat": 32.8407,
+      "lon": -83.6324
+    },
+    {
+      "name": "Augusta",
+      "state": "GA",
+      "lat": 33.4735,
+      "lon": -82.0105
     }
   ]
 }
