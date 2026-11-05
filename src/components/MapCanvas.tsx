@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import {
+  Circle,
   CircleMarker,
   MapContainer,
   Polygon,
@@ -19,6 +20,7 @@ export type Focus = { lat: number; lon: number; zoom: number; n: number };
 type Props = {
   layers: Layers;
   focus: Focus | null;
+  ring: { lat: number; lon: number } | null;
   onPick: (picked: Picked) => void;
   onLand: (lat: number, lon: number) => void;
 };
@@ -68,7 +70,14 @@ const ZONE_COLOR = {
   lower: mapInk.lower,
 } as const;
 
-export function MapCanvas({ layers, focus, onPick, onLand }: Props) {
+const BLAST_RINGS = [
+  { miles: 12, color: "#c4a574", opacity: 0.05 },
+  { miles: 6, color: "#d08a45", opacity: 0.07 },
+  { miles: 3, color: "#d4533a", opacity: 0.1 },
+  { miles: 1.5, color: "#d4533a", opacity: 0.18 },
+] as const;
+
+export function MapCanvas({ layers, focus, ring, onPick, onLand }: Props) {
   const zones = [...catalog.regions].sort((a, b) => {
     const rank = { severe: 0, lower: 1, worst: 2 };
     return rank[a.band] - rank[b.band];
@@ -88,6 +97,22 @@ export function MapCanvas({ layers, focus, onPick, onLand }: Props) {
       <ZoomControl position="bottomright" />
       <Fly focus={focus} />
       <LandClick onLand={onLand} />
+      {ring
+        ? BLAST_RINGS.map((band) => (
+            <Circle
+              key={band.miles}
+              center={[ring.lat, ring.lon]}
+              radius={band.miles * 1609.344}
+              pathOptions={{
+                color: band.color,
+                weight: 1,
+                fillColor: band.color,
+                fillOpacity: band.opacity,
+                interactive: false,
+              }}
+            />
+          ))
+        : null}
       {layers.fallout || layers.zones
         ? zones
             .filter((zone) =>

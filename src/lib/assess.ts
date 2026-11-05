@@ -1,12 +1,30 @@
 import { catalog } from "@/data/catalog";
 import type { Band, Place, Region, Shelter, Target } from "@/data/types";
 
+export type NearSite = {
+  name: string;
+  state: string;
+  category: string;
+  km: number;
+  milesLabel: string;
+  blast: string;
+};
+
+export type QuieterRead = {
+  name: string;
+  line: string;
+};
+
 export type Assessment = {
   band: Band;
   title: string;
   summary: string;
   reasons: string[];
   placeLabel: string;
+  nearestSite: NearSite | null;
+  primaryLine: string | null;
+  quieter: QuieterRead | null;
+  ring: { lat: number; lon: number } | null;
   nearestPrimary: { name: string; km: number; state: string } | null;
   nearestShelter: { name: string; km: number; city: string; state: string } | null;
   zones: Region[];
@@ -34,9 +52,9 @@ const COPY: Record<Band, { title: string; summary: string }> = {
       "No listed aim point is close, and this spot is outside the marked fallout fans. That is a better starting position than the missile fields. It is not a guarantee, and it is not a reason to drive.",
   },
   lower: {
-    title: "Lower relative exposure",
+    title: "Quieter on this list",
     summary:
-      "This sits in one of the lower-exposure boxes: fewer aim points, and off the main silo-fallout fan on a normal west wind. Lower is not safe. A wind shift, a later strike, or the loss of fuel, power, and medicine can erase the advantage.",
+      "This sits in one of the quieter boxes: fewer aim points, and off the main silo-fallout fan on a normal west wind. Quieter is not safe. A wind shift, a later strike, or the loss of fuel, power, and medicine can erase the advantage.",
   },
 };
 
@@ -86,6 +104,37 @@ function miles(km: number): string {
   return `${Math.round(mi)} mi`;
 }
 
+function milesNumber(km: number): number {
+  return km * 0.621371;
+}
+
+function blastLine(mi: number, name: string): string {
+  if (mi < 1.5) {
+    return `Inside the ground-zero picture of ${name}: about the first 1.5 miles of one large burst. Do not count on an open-air escape.`;
+  }
+  if (mi < 3) {
+    return `Inside the heavy-blast picture of ${name}, roughly 1.5 to 3 miles. Most houses come down.`;
+  }
+  if (mi < 6) {
+    return `Inside the burn-and-blast picture of ${name}, roughly 3 to 6 miles. A solid wall, and not a window, is what a few minutes of warning can buy.`;
+  }
+  if (mi < 12) {
+    return `Inside the broken-glass picture of ${name}, roughly 6 to 12 miles. Indoors, away from glass.`;
+  }
+  return `Outside the 12-mile blast picture of ${name}. That circle is only the near damage from one large burst. Ground bursts on the missile fields can throw fallout hundreds of miles downwind.`;
+}
+
+function ringCentroid(ring: number[][]): [number, number] {
+  let lat = 0;
+  let lon = 0;
+  const n = Math.max(ring.length - 1, 1);
+  for (let i = 0; i < n; i++) {
+    lat += ring[i]![0];
+    lon += ring[i]![1];
+  }
+  return [lat / n, lon / n];
+}
+
 export function assess(lat: number, lon: number, label: string): Assessment {
   const zones = catalog.regions.filter((r) => inside(lat, lon, r.ring));
   const primaries = catalog.targets.filter((t) => t.priority === "Primary");
@@ -96,6 +145,7 @@ export function assess(lat: number, lon: number, label: string): Assessment {
   const nt = nearest(lat, lon, tertiaries);
   const nd = nearest(lat, lon, catalog.datacenters);
   const nsh = nearest(lat, lon, catalog.shelters);
+  const any = nearest(lat, lon, catalog.targets);
 
   const inWorst = zones.some((z) => z.band === "worst");
   const inSevere = zones.some((z) => z.band === "severe");
@@ -113,34 +163,74 @@ export function assess(lat: number, lon: number, label: string): Assessment {
   else if (inLower) band = "lower";
   else band = "moderate";
 
+  const nearestSite: NearSite | null = any
+    ? {
+        name: any.row.name,
+        state: any.row.state,
+        category: any.row.category,
+        km: any.km,
+        milesLabel: miles(any.km),
+        blast: blastLine(milesNumber(any.km), any.row.name),
+      }
+    : null;
+
+  const primaryLine =
+    np && any && np.row.id !== any.row.id
+      ? `Nearest opening-strike site: ${np.row.name} (${np.row.state}), ${miles(np.km)}.`
+      : null;
+
+  const lowerZones = catalog.regions.filter((r) => r.band === "lower");
+  const insideLower = zones.find((z) => z.band === "lower");
+  let quieter: QuieterRead | null = null;
+  if (insideLower) {
+    quieter = {
+      name: insideLower.name,
+      line: `You are already in a quieter box on this map: ${insideLower.name}. Stay in a solid building. Leaving after the flashes can put you in the open, or downwind.`,
+    };
+  } else if (lowerZones.length) {
+    let best: { name: string; km: number } | null = null;
+    for (const region of lowerZones) {
+      const [clat, clon] = ringCentroid(region.ring);
+      const d = kmBetween(lat, lon, clat, clon);
+      if (!best || d < best.km) best = { name: region.name, km: d };
+    }
+    if (best) {
+      quieter = {
+        name: best.name,
+        line: `Nearest quieter box from here: ${best.name}, ${miles(best.km)} away. Be there before a crisis if you are going to be there at all. After the flashes, that drive can put you in the open or downwind, and the road may cross worse ground.`,
+      };
+    }
+  }
+
   const reasons: string[] = [];
-  if (np) {
+  if (np && (!any || np.row.id === any.row.id)) {
     reasons.push(
       `Nearest primary aim point: ${np.row.name} (${np.row.state}), ${miles(np.km)} away.`,
     );
   }
-  if (ns && ns.km < 200) {
+  if (ns && ns.km < 200 && (!any || ns.row.id !== any.row.id)) {
     reasons.push(
       `Nearest secondary site: ${ns.row.name} (${ns.row.state}), ${miles(ns.km)}.`,
     );
   }
-  if (nt && nt.km < 120) {
-    reasons.push(
-      `Nearest metro or airport marker: ${nt.row.name}, ${miles(nt.km)}.`,
-    );
+  if (nt && nt.km < 120 && (!any || nt.row.id !== any.row.id)) {
+    reasons.push(`Nearest metro or airport marker: ${nt.row.name}, ${miles(nt.km)}.`);
   }
   if (nd && nd.km < 150) {
     reasons.push(`${nd.row.name} is ${miles(nd.km)} away.`);
   }
-  for (const z of zones) reasons.push(z.why);
+  for (const z of zones) {
+    if (z.band === "lower") continue;
+    reasons.push(z.why);
+  }
+  reasons.push(
+    "The grade is distance to places on this list. A site left off the list makes the reading too calm.",
+  );
   if (nsh) {
     reasons.push(
       `Nearest shelter on the FEMA open list: ${nsh.row.name} in ${nsh.row.city}, ${nsh.row.state} (${miles(nsh.km)}). That is an ordinary disaster shelter reported open on ${catalog.shelterSnapshot}, not a nuclear bunker.`,
     );
   }
-  reasons.push(
-    "For almost everyone, the better move is to shelter inside a solid building for the first two or three days, not to drive toward a greener part of the map.",
-  );
 
   return {
     band,
@@ -148,6 +238,10 @@ export function assess(lat: number, lon: number, label: string): Assessment {
     summary: COPY[band].summary,
     reasons,
     placeLabel: label,
+    nearestSite,
+    primaryLine,
+    quieter,
+    ring: any ? { lat: any.row.lat, lon: any.row.lon } : null,
     nearestPrimary: np
       ? { name: np.row.name, km: np.km, state: np.row.state }
       : null,

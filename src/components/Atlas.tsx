@@ -203,6 +203,21 @@ export function Atlas() {
           <section className={`verdict ${bandClass(reading.band)}`}>
             <p className="eyebrow">{reading.placeLabel}</p>
             <h2>{reading.title}</h2>
+            {reading.nearestSite ? (
+              <div className="distance">
+                <p>
+                  <strong>{reading.nearestSite.milesLabel}</strong> from{" "}
+                  {reading.nearestSite.name}
+                  <span className="fine">
+                    {" "}
+                    · {reading.nearestSite.category}
+                  </span>
+                </p>
+                <p>{reading.nearestSite.blast}</p>
+                {reading.primaryLine ? <p>{reading.primaryLine}</p> : null}
+                {reading.quieter ? <p>{reading.quieter.line}</p> : null}
+              </div>
+            ) : null}
             <p>{reading.summary}</p>
             <ul>
               {reading.reasons.slice(0, 5).map((reason) => (
@@ -352,7 +367,13 @@ export function Atlas() {
       </aside>
       <div className="atlas-stage">
         {MapView ? (
-          <MapView layers={layers} focus={focus} onPick={setPicked} onLand={onLand} />
+          <MapView
+            layers={layers}
+            focus={focus}
+            ring={reading?.ring ?? null}
+            onPick={setPicked}
+            onLand={onLand}
+          />
         ) : (
           <div className="map-pending">
             <p>Loading the map of the lower forty-eight, Alaska, and Hawaii.</p>
@@ -363,6 +384,7 @@ export function Atlas() {
           <span><i className="swatch severe" /> Secondary</span>
           <span><i className="swatch tertiary" /> City</span>
           <span><i className="swatch data" /> Data</span>
+          <span><i className="swatch severe" /> 12 mi ring</span>
           <span><i className="swatch lower hollow" /> Shelter open</span>
         </div>
       </div>

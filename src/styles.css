@@ -210,6 +210,21 @@ section h3 {
   font-size: 0.86rem;
 }
 
+.distance {
+  margin: 0.35rem 0 0.7rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.distance p {
+  margin: 0.35rem 0;
+}
+
+.distance strong {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.05rem;
+}
+
 .band-worst { border-color: color-mix(in srgb, var(--color-danger) 70%, var(--color-line)); }
 .band-severe { border-color: color-mix(in srgb, var(--color-severe) 70%, var(--color-line)); }
 .band-elevated { border-color: color-mix(in srgb, var(--color-tertiary) 70%, var(--color-line)); }
