@@ -261,7 +261,7 @@ export function Atlas() {
             </button>
           </div>
           <ul className="toggles">
-            <Toggle on={layers.primary} label="Primary aim points" count={32} swatch="danger" onClick={() => toggle("primary")} />
+            <Toggle on={layers.primary} label="Primary aim points" count={catalog.targets.filter((t) => t.priority === "Primary").length} swatch="danger" onClick={() => toggle("primary")} />
             <Toggle on={layers.secondary} label="Ports, plants, bases" count={catalog.targets.filter((t) => t.priority === "Secondary").length} swatch="severe" onClick={() => toggle("secondary")} />
             <Toggle on={layers.tertiary} label="Cities and airports" count={catalog.targets.filter((t) => t.priority === "Tertiary").length} swatch="tertiary" onClick={() => toggle("tertiary")} />
             <Toggle on={layers.datacenters} label="Data-center hubs" count={catalog.datacenters.length} swatch="data" onClick={() => toggle("datacenters")} />
@@ -269,6 +269,41 @@ export function Atlas() {
             <Toggle on={layers.zones} label="Worst and lower zones" count={catalog.regions.filter((r) => r.kind !== "fallout").length} swatch="lower" onClick={() => toggle("zones")} />
             <Toggle on={layers.shelters} label="Shelters open now" count={catalog.shelters.length} swatch="lower" onClick={() => toggle("shelters")} />
           </ul>
+        </section>
+
+        <section>
+          <h3>The order of a strike</h3>
+          <p className="fine">
+            Someone thinking clearly does not start with the biggest cities. The
+            first job is to take away the weapons that can still be fired, and the
+            radios that tell them to fire.
+          </p>
+          <ol className="strike-order">
+            <li>
+              <strong>What can still shoot back.</strong> The missile fields, the
+              two ballistic-missile submarine bases, the bomber bases, the command
+              posts, and the radios that reach submarines. These are the red aim
+              points. The silos are buried, so the bursts are on the ground, and
+              ground bursts throw the long fallout.
+            </li>
+            <li>
+              <strong>The plants that build the next arsenal.</strong> Los Alamos,
+              Livermore, Oak Ridge, Savannah River, Hanford, the Kansas City
+              weapons plant, and Pantex. Catching the missiles in their silos
+              matters less if these are left standing.
+            </li>
+            <li>
+              <strong>The forces and the ports for the next month.</strong> The
+              large Army and Marine posts, the airlift bases, the Port of New York
+              and New Jersey, and dams that cannot be replaced quickly.
+            </li>
+            <li>
+              <strong>Cities, and only later.</strong> New York, Los Angeles,
+              Chicago, and the others are what you hit if the aim has become
+              breaking the country, not disarming it. That is the city layer. It
+              is not the opening move.
+            </li>
+          </ol>
         </section>
 
         <section>
@@ -359,8 +394,10 @@ export function Atlas() {
         <footer className="fine colophon">
           Aim points come from the 2025 full-scale target list loaded for this
           atlas ({catalog.targets.length} sites). It is for wherever you are, not for one region. Data centers are public
-          commercial clusters, not a classified inventory. Fallout fans are a
-          west-to-east simplification, not a forecast. Shelter dots are a snapshot
+          commercial clusters, not a classified inventory. Fallout fans follow the
+          usual upper wind, from the west or west-northwest, so the dust goes east
+          to east-southeast, including the long end through Chicago and Michigan.
+          They are not a forecast. Shelter dots are a snapshot
           of {catalog.shelterSource}. This is a planning picture, not a prediction
           and not official guidance.
         </footer>
