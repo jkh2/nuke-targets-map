@@ -141,11 +141,11 @@ function ringCentroid(ring: number[][]): [number, number] {
 }
 
 const RULE: Record<Band, string> = {
-  worst: "Color rule: a worst-ground box, or within about 28 miles of an opening-strike site.",
-  severe: "Color rule: inside a fallout fan, or within about 68 miles of an opening-strike site.",
-  elevated: "Color rule: a base, port, or plant within about 25 miles, a data center within about 19, or a city within about 16.",
-  lower: "Color rule: a quieter box, off the fan for this wind. Not a safety grade.",
-  moderate: "Color rule: nothing on this list is close, and you are outside the fans. A hole in the list makes this too calm.",
+  worst: "Worst ground, or within about 28 miles of an opening-strike site.",
+  severe: "Inside a fallout fan, or within about 68 miles of an opening-strike site.",
+  elevated: "A base, port, or plant within about 25 miles, a data center within about 19, or a city within about 16.",
+  lower: "A quieter box, off the fan for this wind.",
+  moderate: "Nothing on this list is close, and you are outside the fans. A hole in the list makes this too calm.",
 };
 
 function burstNote(target: Target): string {

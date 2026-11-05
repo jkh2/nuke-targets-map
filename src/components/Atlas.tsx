@@ -120,20 +120,15 @@ export function Atlas() {
     <div className="atlas-shell">
       <aside className="atlas-panel">
         <header className="atlas-head">
-          <p className="eyebrow">Relative exposure atlas</p>
+          <p className="eyebrow">Where you stand</p>
           <h1>Clear Ground</h1>
           <p className="lede">
-            Type your town. The reading says how close the nearest listed site is,
-            what kind of danger that is, and where the closer quieter ground is.
+            Type your town. You get the miles to the nearest listed site, what
+            kind of danger that is, and the closer quieter ground.
           </p>
           <p className="caveat">
-            This list is compiled, not official. A quiet reading can mean we left
-            something out. California is still{" "}
-            {Math.round(
-              (100 * catalog.targets.filter((t) => t.state === "CA").length) /
-                catalog.targets.length,
-            )}
-            % of the sites.
+            Compiled from public lists. Not official. A quiet reading can mean a
+            site was left off.
           </p>
         </header>
 
@@ -274,9 +269,8 @@ export function Atlas() {
           <section className="verdict band-moderate">
             <h2>Check your town</h2>
             <p>
-              Type the town you live in. The reading will say how close the nearest
-              listed site is, whether the danger is blast, fallout, or later, and
-              where the closer quieter ground is on this map. Quieter is not safe.
+              Type the town you live in. You get the miles to the nearest listed
+              site, what kind of danger that is, and the closer quieter ground.
             </p>
           </section>
         )}
@@ -290,9 +284,7 @@ export function Atlas() {
         ) : null}
 
         <section>
-          <div className="row-between">
-            <h3>What to show</h3>
-          </div>
+          <h3>Layers</h3>
           <div className="presets">
             <button type="button" onClick={() => setLayers(PRESETS.full)}>
               Larger war
@@ -305,18 +297,10 @@ export function Atlas() {
             </button>
           </div>
           <p className="fine">
-            A smaller war is the red points and the fallout they throw. A larger
-            war adds the cities, ports, and plants. Old public maps draw this as
-            triangles against a carpet of dots. The carpet on the plains is the
-            silo fields. Those dots are not copied here.
+            Smaller war: the red points and the fallout they throw. Larger war
+            adds the cities, ports, and plants.
           </p>
-          <p className="fine">
-            Fallout wind. The fans are the usual direction, not a forecast. A 2021
-            picture of the silo fields, using that year's weather, shows the worst
-            day at each place: heaviest on the plains just downwind, lighter by the
-            East Coast, and light west of the fields. That envelope is wider than
-            these fans. One day can also throw a lobe south off Wyoming.
-          </p>
+          <p className="fine">Wind for the fans. Not a forecast.</p>
           <div className="presets">
             {WINDS.map((item) => (
               <button
@@ -330,40 +314,30 @@ export function Atlas() {
             ))}
           </div>
           <ul className="toggles">
-            <Toggle on={layers.primary} label="Primary aim points" count={catalog.targets.filter((t) => t.priority === "Primary").length} swatch="danger" onClick={() => toggle("primary")} />
+            <Toggle on={layers.primary} label="Opening-strike sites" count={catalog.targets.filter((t) => t.priority === "Primary").length} swatch="danger" onClick={() => toggle("primary")} />
             <Toggle on={layers.secondary} label="Ports, plants, bases" count={catalog.targets.filter((t) => t.priority === "Secondary").length} swatch="severe" onClick={() => toggle("secondary")} />
-            <Toggle on={layers.tertiary} label="Cities and airports" count={catalog.targets.filter((t) => t.priority === "Tertiary").length} swatch="tertiary" onClick={() => toggle("tertiary")} />
-            <Toggle on={layers.datacenters} label="Data-center hubs" count={catalog.datacenters.length} swatch="data" onClick={() => toggle("datacenters")} />
+            <Toggle on={layers.tertiary} label="Cities" count={catalog.targets.filter((t) => t.priority === "Tertiary").length} swatch="tertiary" onClick={() => toggle("tertiary")} />
+            <Toggle on={layers.datacenters} label="Data centers" count={catalog.datacenters.length} swatch="data" onClick={() => toggle("datacenters")} />
             <Toggle on={layers.fallout} label="Fallout fans" count={catalog.regions.filter((r) => r.kind === "fallout").length} swatch="severe" onClick={() => toggle("fallout")} />
-            <Toggle on={layers.zones} label="Worst and lower zones" count={catalog.regions.filter((r) => r.kind !== "fallout").length} swatch="lower" onClick={() => toggle("zones")} />
-            <Toggle on={layers.shelters} label="Ordinary shelters, not bunkers" count={catalog.shelters.length} swatch="lower" onClick={() => toggle("shelters")} />
+            <Toggle on={layers.zones} label="Worst and quieter boxes" count={catalog.regions.filter((r) => r.kind !== "fallout").length} swatch="lower" onClick={() => toggle("zones")} />
+            <Toggle on={layers.shelters} label="Ordinary shelters" count={catalog.shelters.length} swatch="lower" onClick={() => toggle("shelters")} />
           </ul>
         </section>
 
         <section>
-          <h3>Why a place is on the map</h3>
-          <p className="fine">
-            For reading where you stand. Not a plan.
-          </p>
+          <h3>What the colors mean</h3>
           <ol className="strike-order">
             <li>
-              <strong>Near something that can still shoot back.</strong> Red
-              points: missile fields, the two submarine bases, bomber bases,
-              command posts, and the submarine radios. Buried silos mean ground
-              bursts, and those are the long fallout. The fans start there, not
-              at the cities.
+              <strong>Red.</strong> Missile fields, the two submarine bases,
+              bomber bases, command posts, and the submarine radios. Buried
+              silos mean ground bursts. The fans start here.
             </li>
             <li>
-              <strong>Near a plant that builds weapons.</strong> Los Alamos,
-              Livermore, Oak Ridge, Savannah River, Hanford, Kansas City, and
-              Pantex. A town next to one is not quiet.
+              <strong>Ports, plants, bases.</strong> Weapons plants, large posts,
+              airlift, the big ports, and dams. A town next to one is not quiet.
             </li>
             <li>
-              <strong>Near a base, a port, or a dam.</strong> Different from
-              living downwind of a missile field.
-            </li>
-            <li>
-              <strong>In a city.</strong> Not the opening picture. It matters if
+              <strong>Cities.</strong> Not the opening picture. They matter if
               the war spreads past the weapons.
             </li>
           </ol>
@@ -392,10 +366,10 @@ export function Atlas() {
         </section>
 
         <section>
-          <h3>Lower relative exposure</h3>
+          <h3>Quieter boxes</h3>
           <p className="fine">
             Fewer listed sites, and off the main fan on the usual winter wind.
-            Each box has a cost. A place to already be, not a drive after the flashes.
+            Each has a cost. A place to already be.
           </p>
           <ul className="place-list">
             {lower.map((region) => (
@@ -450,9 +424,7 @@ export function Atlas() {
         ) : null}
 
         <footer className="fine colophon">
-          A compiled list, not an official one. The fans follow the wind you pick.
-          They are not a forecast. Shelters, if you turn them on, are ordinary
-          disaster shelters. Not a prediction.
+          Compiled public list. Not a forecast. Not official.
         </footer>
       </aside>
       <div className="atlas-stage">
@@ -471,12 +443,12 @@ export function Atlas() {
           </div>
         )}
         <div className="map-legend">
-          <span><i className="swatch danger" /> Primary</span>
-          <span><i className="swatch severe" /> Secondary</span>
+          <span><i className="swatch danger" /> Opening strike</span>
+          <span><i className="swatch severe" /> Port, plant, base</span>
           <span><i className="swatch tertiary" /> City</span>
-          <span><i className="swatch data" /> Data</span>
+          <span><i className="swatch data" /> Data center</span>
           <span><i className="swatch severe" /> 12 mi ring</span>
-          <span><i className="swatch lower hollow" /> Shelter open</span>
+          <span><i className="swatch lower hollow" /> Shelter</span>
         </div>
       </div>
     </div>
