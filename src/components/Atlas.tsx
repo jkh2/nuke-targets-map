@@ -123,7 +123,8 @@ export function Atlas() {
           <p className="eyebrow">Relative exposure atlas</p>
           <h1>Clear Ground</h1>
           <p className="lede">
-            Search your town, or click where you are.
+            Type your town. The reading says how close the nearest listed site is,
+            what kind of danger that is, and where the closer quieter ground is.
           </p>
           <p className="caveat">
             This list is compiled, not official. A quiet reading can mean we left
@@ -157,11 +158,11 @@ export function Atlas() {
             }
           }}
         >
-          <label htmlFor="place-search">Check a place</label>
+          <label htmlFor="place-search">Your town</label>
           <input
             id="place-search"
             value={query}
-            placeholder="City, base, or shelter"
+            placeholder="Town or city"
             onChange={(event) => setQuery(event.target.value)}
             autoComplete="off"
           />
@@ -222,14 +223,19 @@ export function Atlas() {
           <section className={`verdict ${bandClass(reading.band)}`}>
             <p className="eyebrow">{reading.placeLabel}</p>
             <h2>{reading.title}</h2>
-            <p className="fine rule">{reading.rule}</p>
+            <p className="plain">{reading.summary}</p>
             {reading.nearestSite ? (
               <div className="distance">
-                <p>
+                <p className="miles">
                   <strong>{reading.nearestSite.milesLabel}</strong> from{" "}
                   {reading.nearestSite.name}
                   <span className="fine"> · {reading.nearestSite.category}</span>
                 </p>
+                {reading.quieter ? (
+                  <p className="safer">
+                    <strong>Closer quieter ground.</strong> {reading.quieter.line}
+                  </p>
+                ) : null}
                 <p>
                   <strong>Blast.</strong> {reading.blast}
                 </p>
@@ -242,11 +248,6 @@ export function Atlas() {
                   </p>
                 ) : null}
                 {reading.primaryLine ? <p>{reading.primaryLine}</p> : null}
-                {reading.quieter ? (
-                  <p>
-                    <strong>Quieter ground.</strong> {reading.quieter.line}
-                  </p>
-                ) : null}
               </div>
             ) : (
               <div className="distance">
@@ -254,12 +255,13 @@ export function Atlas() {
                   <strong>Fallout.</strong> {reading.fallout}
                 </p>
                 {reading.quieter ? (
-                  <p>
-                    <strong>Quieter ground.</strong> {reading.quieter.line}
+                  <p className="safer">
+                    <strong>Closer quieter ground.</strong> {reading.quieter.line}
                   </p>
                 ) : null}
               </div>
             )}
+            <p className="fine rule">{reading.rule}</p>
             {reading.reasons.length > 0 ? (
               <ul>
                 {reading.reasons.slice(0, 3).map((reason) => (
@@ -270,8 +272,12 @@ export function Atlas() {
           </section>
         ) : (
           <section className="verdict band-moderate">
-            <h2>Check a place</h2>
-            <p>Search a town, or click the map.</p>
+            <h2>Check your town</h2>
+            <p>
+              Type the town you live in. The reading will say how close the nearest
+              listed site is, whether the danger is blast, fallout, or later, and
+              where the closer quieter ground is on this map. Quieter is not safe.
+            </p>
           </section>
         )}
 

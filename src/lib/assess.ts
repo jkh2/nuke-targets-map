@@ -47,9 +47,9 @@ const COPY: Record<Band, { title: string; summary: string }> = {
       "Not necessarily the aim point. You are inside a fallout fan for the wind you picked, or still close to an opening-strike site. The dust arrives after the flashes, and it can last days.",
   },
   elevated: {
-    title: "Elevated",
+    title: "Close to a later target",
     summary:
-      "A listed target, a nuclear plant, a port, a refinery, or a major data-center cluster is close. Quiet on a limited counterforce strike, a poor bet in a full exchange.",
+      "A listed site is close, but it is not an opening-strike site. Quiet if a strike stays on the weapons. A poor bet if the war spreads past them.",
   },
   moderate: {
     title: "Quieter, not safe",

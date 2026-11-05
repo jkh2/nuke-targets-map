@@ -238,9 +238,22 @@ section h3 {
   margin: 0.35rem 0;
 }
 
-.distance strong {
-  font-variant-numeric: tabular-nums;
-  font-size: 1.05rem;
+.verdict .plain {
+  color: var(--color-paper);
+  font-size: 1rem;
+  margin: 0.2rem 0 0.5rem;
+}
+
+.distance .miles strong {
+  font-size: 1.35rem;
+}
+
+.distance .safer {
+  color: var(--color-paper);
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--color-lower) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-lower) 45%, var(--color-line));
 }
 
 .strike-order {
