@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { catalog } from "@/data/catalog";
 import type { Layers, Picked } from "@/data/types";
 import { assess, placeKey, type Assessment } from "@/lib/assess";
+import { QUIET_COST, WINDS, type WindId } from "@/lib/wind";
 import type { Focus } from "./MapCanvas";
 import "leaflet/dist/leaflet.css";
 
@@ -11,7 +12,7 @@ const PRESETS = {
     secondary: true,
     tertiary: true,
     datacenters: true,
-    shelters: true,
+    shelters: false,
     fallout: true,
     zones: true,
   },
@@ -20,7 +21,7 @@ const PRESETS = {
     secondary: false,
     tertiary: false,
     datacenters: true,
-    shelters: true,
+    shelters: false,
     fallout: true,
     zones: true,
   },
@@ -29,7 +30,7 @@ const PRESETS = {
     secondary: false,
     tertiary: false,
     datacenters: false,
-    shelters: true,
+    shelters: false,
     fallout: true,
     zones: true,
   },
@@ -60,6 +61,8 @@ export function Atlas() {
   const [picked, setPicked] = useState<Picked | null>(null);
   const [reading, setReading] = useState<Assessment | null>(null);
   const [tick, setTick] = useState(0);
+  const [wind, setWind] = useState<WindId>("usual");
+  const [spot, setSpot] = useState<{ lat: number; lon: number; label: string } | null>(null);
 
   useEffect(() => {
     void import("./MapCanvas").then((mod) => setMapView(() => mod.MapCanvas));
@@ -83,6 +86,16 @@ export function Atlas() {
     return [...places, ...targets, ...shelters].slice(0, 10);
   }, [query]);
 
+  function readAt(lat: number, lon: number, label: string, next: WindId = wind) {
+    setSpot({ lat, lon, label });
+    setReading(assess(lat, lon, label, next));
+  }
+
+  function pickWind(id: WindId) {
+    setWind(id);
+    if (spot) setReading(assess(spot.lat, spot.lon, spot.label, id));
+  }
+
   function go(lat: number, lon: number, zoom: number) {
     setTick((n) => n + 1);
     setFocus({ lat, lon, zoom, n: tick + 1 });
@@ -90,7 +103,7 @@ export function Atlas() {
 
   function checkPlace(name: string, state: string, lat: number, lon: number) {
     setPicked({ kind: "place", name, state });
-    setReading(assess(lat, lon, `${name}, ${state}`));
+    readAt(lat, lon, `${name}, ${state}`);
     go(lat, lon, name === "Juneau" || state === "AK" || state === "HI" ? 6 : 7);
     setQuery("");
   }
@@ -110,10 +123,18 @@ export function Atlas() {
           <p className="eyebrow">Relative exposure atlas</p>
           <h1>Clear Ground</h1>
           <p className="lede">
-            For anyone in the United States. Search your town, or click where you
-            are. The map shows the aim points on this list, where fallout usually
-            travels, and which ground is quieter. Quieter is not safe, and the
-            time to be on quieter ground is before a crisis, not after the flashes.
+            Search your town, or click where you are. The reading says what kind of
+            danger that spot is in, and the closest safer ground on this map.
+            Quieter is not safe. Be there before a crisis, not after the flashes.
+          </p>
+          <p className="caveat">
+            This list is compiled, not official. A quiet reading can mean we left
+            something out. California is still{" "}
+            {Math.round(
+              (100 * catalog.targets.filter((t) => t.state === "CA").length) /
+                catalog.targets.length,
+            )}
+            % of the sites.
           </p>
         </header>
 
@@ -127,12 +148,12 @@ export function Atlas() {
               checkPlace(first.place.name, first.place.state, first.place.lat, first.place.lon);
             } else if (first.kind === "target") {
               setPicked({ kind: "target", id: first.target.id });
-              setReading(assess(first.target.lat, first.target.lon, first.target.name));
+              readAt(first.target.lat, first.target.lon, first.target.name);
               go(first.target.lat, first.target.lon, 8);
               setQuery("");
             } else {
               setPicked({ kind: "shelter", id: first.shelter.id });
-              setReading(assess(first.shelter.lat, first.shelter.lon, first.shelter.name));
+              readAt(first.shelter.lat, first.shelter.lon, first.shelter.name);
               go(first.shelter.lat, first.shelter.lon, 9);
               setQuery("");
             }
@@ -158,12 +179,12 @@ export function Atlas() {
                       checkPlace(row.place.name, row.place.state, row.place.lat, row.place.lon);
                     } else if (row.kind === "target") {
                       setPicked({ kind: "target", id: row.target.id });
-                      setReading(assess(row.target.lat, row.target.lon, row.target.name));
+                      readAt(row.target.lat, row.target.lon, row.target.name);
                       go(row.target.lat, row.target.lon, 8);
                       setQuery("");
                     } else {
                       setPicked({ kind: "shelter", id: row.shelter.id });
-                      setReading(assess(row.shelter.lat, row.shelter.lon, row.shelter.name));
+                      readAt(row.shelter.lat, row.shelter.lon, row.shelter.name);
                       go(row.shelter.lat, row.shelter.lon, 9);
                       setQuery("");
                     }
@@ -203,21 +224,44 @@ export function Atlas() {
           <section className={`verdict ${bandClass(reading.band)}`}>
             <p className="eyebrow">{reading.placeLabel}</p>
             <h2>{reading.title}</h2>
+            <p className="fine rule">{reading.rule}</p>
             {reading.nearestSite ? (
               <div className="distance">
                 <p>
                   <strong>{reading.nearestSite.milesLabel}</strong> from{" "}
                   {reading.nearestSite.name}
-                  <span className="fine">
-                    {" "}
-                    · {reading.nearestSite.category}
-                  </span>
+                  <span className="fine"> · {reading.nearestSite.category}</span>
                 </p>
-                <p>{reading.nearestSite.blast}</p>
+                <p>
+                  <strong>Blast.</strong> {reading.blast}
+                </p>
+                <p>
+                  <strong>Fallout.</strong> {reading.fallout}
+                </p>
+                {reading.later ? (
+                  <p>
+                    <strong>Later.</strong> {reading.later}
+                  </p>
+                ) : null}
                 {reading.primaryLine ? <p>{reading.primaryLine}</p> : null}
-                {reading.quieter ? <p>{reading.quieter.line}</p> : null}
+                {reading.quieter ? (
+                  <p>
+                    <strong>Closer safer ground.</strong> {reading.quieter.line}
+                  </p>
+                ) : null}
               </div>
-            ) : null}
+            ) : (
+              <div className="distance">
+                <p>
+                  <strong>Fallout.</strong> {reading.fallout}
+                </p>
+                {reading.quieter ? (
+                  <p>
+                    <strong>Closer safer ground.</strong> {reading.quieter.line}
+                  </p>
+                ) : null}
+              </div>
+            )}
             <p>{reading.summary}</p>
             <ul>
               {reading.reasons.slice(0, 5).map((reason) => (
@@ -229,9 +273,9 @@ export function Atlas() {
           <section className="verdict band-moderate">
             <h2>Check the ground, then decide</h2>
             <p>
-              Search your town, or click the map. The reading is distance from
-              your spot to the aim points on this list, and whether that spot sits
-              in a fallout fan drawn for a normal west wind.
+              Search your town, or click the map. You get three things: how close
+              the nearest listed site is, whether you are in a fallout fan for the
+              wind you picked, and the closest safer ground on this map.
 
             </p>
           </section>
@@ -260,6 +304,19 @@ export function Atlas() {
               Where to stand
             </button>
           </div>
+          <p className="fine">Fallout wind. The fans turn. This is not a forecast.</p>
+          <div className="presets">
+            {WINDS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={wind === item.id ? "is-on" : undefined}
+                onClick={() => pickWind(item.id)}
+              >
+                {item.short}
+              </button>
+            ))}
+          </div>
           <ul className="toggles">
             <Toggle on={layers.primary} label="Primary aim points" count={catalog.targets.filter((t) => t.priority === "Primary").length} swatch="danger" onClick={() => toggle("primary")} />
             <Toggle on={layers.secondary} label="Ports, plants, bases" count={catalog.targets.filter((t) => t.priority === "Secondary").length} swatch="severe" onClick={() => toggle("secondary")} />
@@ -267,7 +324,7 @@ export function Atlas() {
             <Toggle on={layers.datacenters} label="Data-center hubs" count={catalog.datacenters.length} swatch="data" onClick={() => toggle("datacenters")} />
             <Toggle on={layers.fallout} label="Fallout fans" count={catalog.regions.filter((r) => r.kind === "fallout").length} swatch="severe" onClick={() => toggle("fallout")} />
             <Toggle on={layers.zones} label="Worst and lower zones" count={catalog.regions.filter((r) => r.kind !== "fallout").length} swatch="lower" onClick={() => toggle("zones")} />
-            <Toggle on={layers.shelters} label="Shelters open now" count={catalog.shelters.length} swatch="lower" onClick={() => toggle("shelters")} />
+            <Toggle on={layers.shelters} label="Ordinary shelters, not bunkers" count={catalog.shelters.length} swatch="lower" onClick={() => toggle("shelters")} />
           </ul>
         </section>
 
@@ -316,7 +373,7 @@ export function Atlas() {
                   onClick={() => {
                     const [lat, lon] = centroid(region.ring);
                     setPicked({ kind: "region", id: region.id });
-                    setReading(assess(lat, lon, region.name));
+                    readAt(lat, lon, region.name);
                     go(lat, lon, 6);
                   }}
                 >
@@ -331,11 +388,10 @@ export function Atlas() {
         <section>
           <h3>Lower relative exposure</h3>
           <p className="fine">
-            These boxes have no aim point from this list inside them, and they sit
-            off the main silo-fallout fan. They are quieter places to already be.
-            They are not a destination to drive toward once an attack has started.
-            If you can choose where to be, choose before anything happens, and
-            then stay put.
+            These boxes have fewer aim points on this list, and they sit off the
+            main silo-fallout fan on the usual wind. Each one has a cost: water,
+            winter, medicine, or a road. They are places to already be. They are
+            not a drive to start after the flashes.
           </p>
           <ul className="place-list">
             {lower.map((region) => (
@@ -345,7 +401,7 @@ export function Atlas() {
                   onClick={() => {
                     const [lat, lon] = centroid(region.ring);
                     setPicked({ kind: "region", id: region.id });
-                    setReading(assess(lat, lon, region.name));
+                    readAt(lat, lon, region.name);
                     go(lat, lon, region.id === "r-seak" ? 5 : 7);
                   }}
                 >
@@ -357,8 +413,9 @@ export function Atlas() {
           </ul>
         </section>
 
+        {layers.shelters ? (
         <section>
-          <h3>Shelters that are actually open</h3>
+          <h3>Ordinary shelters, not bunkers</h3>
           <p className="fine">
             FEMA's National Shelter System listed {catalog.shelters.length} shelters
             open on {catalog.shelterSnapshot}. They are Red Cross and local
@@ -374,7 +431,7 @@ export function Atlas() {
                   type="button"
                   onClick={() => {
                     setPicked({ kind: "shelter", id: shelter.id });
-                    setReading(assess(shelter.lat, shelter.lon, shelter.name));
+                    readAt(shelter.lat, shelter.lon, shelter.name);
                     go(shelter.lat, shelter.lon, 9);
                   }}
                 >
@@ -390,16 +447,18 @@ export function Atlas() {
             ))}
           </ul>
         </section>
+        ) : null}
 
         <footer className="fine colophon">
           Aim points come from the 2025 full-scale target list loaded for this
           atlas ({catalog.targets.length} sites). It is for wherever you are, not for one region. Data centers are public
           commercial clusters, not a classified inventory. Fallout fans follow the
-          usual upper wind, from the west or west-northwest, so the dust goes east
-          to east-southeast, including the long end through Chicago and Michigan.
-          They are not a forecast. Shelter dots are a snapshot
-          of {catalog.shelterSource}. This is a planning picture, not a prediction
-          and not official guidance.
+          wind you pick. Usual winter is west to west-northwest, dust east to
+          east-southeast, including Chicago and Michigan. A weaker summer wind
+          does not travel as far. A south wind turns the fans north. They are not
+          a forecast. Shelter dots stay off until you ask for them, and they are
+          ordinary disaster shelters, not bunkers. This is a planning picture, not
+          a prediction and not official guidance.
         </footer>
       </aside>
       <div className="atlas-stage">
@@ -408,6 +467,7 @@ export function Atlas() {
             layers={layers}
             focus={focus}
             ring={reading?.ring ?? null}
+            wind={wind}
             onPick={setPicked}
             onLand={onLand}
           />
@@ -430,7 +490,7 @@ export function Atlas() {
 
   function onLand(lat: number, lon: number) {
     setPicked(null);
-    setReading(assess(lat, lon, "Clicked ground"));
+    readAt(lat, lon, "Clicked ground");
   }
 }
 
@@ -479,7 +539,11 @@ function describePick(picked: Picked | null): { kicker: string; title: string; b
   if (picked.kind === "region") {
     const r = catalog.regions.find((row) => row.id === picked.id);
     if (!r) return null;
-    return { kicker: r.band === "lower" ? "Lower relative exposure" : r.band === "severe" ? "Fallout fan" : "Worst ground", title: r.name, body: r.why };
+    return {
+      kicker: r.band === "lower" ? "Lower relative exposure" : r.band === "severe" ? "Fallout fan" : "Worst ground",
+      title: r.name,
+      body: r.band === "lower" && QUIET_COST[r.id] ? `${r.why} ${QUIET_COST[r.id]}` : r.why,
+    };
   }
   return null;
 }

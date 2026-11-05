@@ -1,5 +1,6 @@
 import { catalog } from "@/data/catalog";
 import type { Band, Place, Region, Shelter, Target } from "@/data/types";
+import { QUIET_COST, shapeFallout, windById, type WindId } from "@/lib/wind";
 
 export type NearSite = {
   name: string;
@@ -28,6 +29,10 @@ export type Assessment = {
   nearestPrimary: { name: string; km: number; state: string } | null;
   nearestShelter: { name: string; km: number; city: string; state: string } | null;
   zones: Region[];
+  blast: string;
+  fallout: string;
+  later: string | null;
+  rule: string;
 };
 
 const COPY: Record<Band, { title: string; summary: string }> = {
@@ -39,7 +44,7 @@ const COPY: Record<Band, { title: string; summary: string }> = {
   severe: {
     title: "Severe fallout ground",
     summary:
-      "Not necessarily the aim point, but inside the heavy fallout picture for the usual upper wind, which is from the west or west-northwest. The dust goes east to east-southeast. The danger arrives after the flashes, and it can last days.",
+      "Not necessarily the aim point. You are inside a fallout fan for the wind you picked, or still close to an opening-strike site. The dust arrives after the flashes, and it can last days.",
   },
   elevated: {
     title: "Elevated",
@@ -135,8 +140,61 @@ function ringCentroid(ring: number[][]): [number, number] {
   return [lat / n, lon / n];
 }
 
-export function assess(lat: number, lon: number, label: string): Assessment {
-  const zones = catalog.regions.filter((r) => inside(lat, lon, r.ring));
+const RULE: Record<Band, string> = {
+  worst:
+    "The color is a rule, not physics: inside a worst-ground box, or within about 28 miles of an opening-strike site.",
+  severe:
+    "The color is a rule, not physics: inside a fallout fan for the wind you picked, or within about 68 miles of an opening-strike site.",
+  elevated:
+    "The color is a rule, not physics: a port, plant, or base within about 25 miles, a data center within about 19, or a city within about 16.",
+  lower:
+    "The color means a quieter box: fewer listed aim points, and off the fan for this wind. It is not a safety grade.",
+  moderate:
+    "The color means nothing on this list is close, and you are outside the fans for this wind. A hole in the list makes this too calm.",
+};
+
+function burstNote(target: Target): string {
+  const text = `${target.category} ${target.name}`.toLowerCase();
+  if (/icbm|silo|minuteman|missile field/.test(text)) {
+    return " The silos are buried, so a strike here is a ground burst. That is what throws the long fallout.";
+  }
+  if (target.priority === "Tertiary" || /metro|airport|air base|bomber|port|airlift/.test(text)) {
+    return " A city or an airfield, if struck, is more likely an airburst: bad nearby, much less long fallout.";
+  }
+  return "";
+}
+
+function withCost(id: string, line: string): string {
+  const cost = QUIET_COST[id];
+  return cost ? `${line} ${cost}` : line;
+}
+
+function laterLine(
+  any: { row: Target; km: number } | null,
+  data: { row: { name: string }; km: number } | null,
+): string | null {
+  if (!any) return null;
+  const text = `${any.row.category} ${any.row.name}`.toLowerCase();
+  const cityish =
+    any.row.priority !== "Primary" &&
+    (any.row.priority === "Tertiary" || /metro|airport|port|refin|plant|dam|army|marine/.test(text));
+  if (cityish) {
+    return `${any.row.name} is later on the list: a city, a port, a plant, a dam, or a base. Quiet if the strike stays on the weapons. A poor bet if the aim becomes breaking the country.`;
+  }
+  if (data && data.km < 80) {
+    return `${data.row.name} is ${miles(data.km)} away. A data-center hub is quiet on a limited strike and a poor bet in a full exchange.`;
+  }
+  return null;
+}
+
+export function assess(lat: number, lon: number, label: string, wind: WindId = "usual"): Assessment {
+  const windInfo = windById(wind);
+  const shaped = catalog.regions.map((region) =>
+    region.kind === "fallout"
+      ? { ...region, ring: shapeFallout(region.id, region.ring, wind) }
+      : region,
+  );
+  const zones = shaped.filter((region) => inside(lat, lon, region.ring));
   const primaries = catalog.targets.filter((t) => t.priority === "Primary");
   const secondaries = catalog.targets.filter((t) => t.priority === "Secondary");
   const tertiaries = catalog.targets.filter((t) => t.priority === "Tertiary");
@@ -154,12 +212,7 @@ export function assess(lat: number, lon: number, label: string): Assessment {
   let band: Band;
   if (inWorst || (np && np.km < 45)) band = "worst";
   else if (inSevere || (np && np.km < 110)) band = "severe";
-  else if (
-    (ns && ns.km < 40) ||
-    (nd && nd.km < 30) ||
-    (nt && nt.km < 25)
-  )
-    band = "elevated";
+  else if ((ns && ns.km < 40) || (nd && nd.km < 30) || (nt && nt.km < 25)) band = "elevated";
   else if (inLower) band = "lower";
   else band = "moderate";
 
@@ -170,9 +223,16 @@ export function assess(lat: number, lon: number, label: string): Assessment {
         category: any.row.category,
         km: any.km,
         milesLabel: miles(any.km),
-        blast: blastLine(milesNumber(any.km), any.row.name),
+        blast: blastLine(milesNumber(any.km), any.row.name) + burstNote(any.row),
       }
     : null;
+
+  const fans = zones.filter((z) => z.kind === "fallout");
+  const fallout = fans.length
+    ? `You are inside ${fans.map((fan) => fan.name).join(", ")}. ${windInfo.label} The dust arrives after the flashes and can last days. This is not the same as standing on the aim point.`
+    : `You are outside the marked fans for this wind. ${windInfo.label}`;
+
+  const later = laterLine(any, nd);
 
   const primaryLine =
     np && any && np.row.id !== any.row.id
@@ -182,22 +242,36 @@ export function assess(lat: number, lon: number, label: string): Assessment {
   const lowerZones = catalog.regions.filter((r) => r.band === "lower");
   const insideLower = zones.find((z) => z.band === "lower");
   let quieter: QuieterRead | null = null;
-  if (insideLower) {
+  if (insideLower && inSevere) {
     quieter = {
       name: insideLower.name,
-      line: `You are already in a quieter box on this map: ${insideLower.name}. Stay in a solid building. Leaving after the flashes can put you in the open, or downwind.`,
+      line: withCost(
+        insideLower.id,
+        `${insideLower.name} is a quieter box on the usual wind. For the wind you picked, a fallout fan covers it, so it is not the safer ground right now.`,
+      ),
+    };
+  } else if (insideLower) {
+    quieter = {
+      name: insideLower.name,
+      line: withCost(
+        insideLower.id,
+        `You are already in quieter ground: ${insideLower.name}. Stay in a solid building. Leaving after the flashes can put you in the open, or downwind.`,
+      ),
     };
   } else if (lowerZones.length) {
-    let best: { name: string; km: number } | null = null;
+    let best: { id: string; name: string; km: number } | null = null;
     for (const region of lowerZones) {
       const [clat, clon] = ringCentroid(region.ring);
       const d = kmBetween(lat, lon, clat, clon);
-      if (!best || d < best.km) best = { name: region.name, km: d };
+      if (!best || d < best.km) best = { id: region.id, name: region.name, km: d };
     }
     if (best) {
       quieter = {
         name: best.name,
-        line: `Nearest quieter box from here: ${best.name}, ${miles(best.km)} away. Be there before a crisis if you are going to be there at all. After the flashes, that drive can put you in the open or downwind, and the road may cross worse ground.`,
+        line: withCost(
+          best.id,
+          `Closest safer ground on this map: ${best.name}, ${miles(best.km)} away. Be there before a crisis if you are going to be there at all. After the flashes, that drive can put you in the open or downwind, and the road may cross worse ground.`,
+        ),
       };
     }
   }
@@ -219,17 +293,9 @@ export function assess(lat: number, lon: number, label: string): Assessment {
   if (nd && nd.km < 150) {
     reasons.push(`${nd.row.name} is ${miles(nd.km)} away.`);
   }
-  for (const z of zones) {
-    if (z.band === "lower") continue;
-    reasons.push(z.why);
-  }
-  reasons.push(
-    "The grade is distance to places on this list. A site left off the list makes the reading too calm.",
-  );
-  if (nsh) {
-    reasons.push(
-      `Nearest shelter on the FEMA open list: ${nsh.row.name} in ${nsh.row.city}, ${nsh.row.state} (${miles(nsh.km)}). That is an ordinary disaster shelter reported open on ${catalog.shelterSnapshot}, not a nuclear bunker.`,
-    );
+  for (const zone of zones) {
+    if (zone.band === "lower" || zone.kind === "fallout") continue;
+    reasons.push(zone.why);
   }
 
   return {
@@ -242,18 +308,17 @@ export function assess(lat: number, lon: number, label: string): Assessment {
     primaryLine,
     quieter,
     ring: any ? { lat: any.row.lat, lon: any.row.lon } : null,
-    nearestPrimary: np
-      ? { name: np.row.name, km: np.km, state: np.row.state }
-      : null,
+    nearestPrimary: np ? { name: np.row.name, km: np.km, state: np.row.state } : null,
     nearestShelter: nsh
-      ? {
-          name: nsh.row.name,
-          km: nsh.km,
-          city: nsh.row.city,
-          state: nsh.row.state,
-        }
+      ? { name: nsh.row.name, km: nsh.km, city: nsh.row.city, state: nsh.row.state }
       : null,
     zones,
+    blast:
+      nearestSite?.blast ??
+      "No listed site to measure a blast picture from. That is not the same as no danger.",
+    fallout,
+    later,
+    rule: RULE[band],
   };
 }
 

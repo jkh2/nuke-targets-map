@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import {
   Circle,
   CircleMarker,
@@ -12,6 +12,7 @@ import {
 import { catalog } from "@/data/catalog";
 import type { Layers, Picked } from "@/data/types";
 import { mapInk } from "@/lib/tokens";
+import { shapeFallout, windById, type WindId } from "@/lib/wind";
 import { BasemapLayers } from "./BasemapLayers";
 import "leaflet/dist/leaflet.css";
 
@@ -23,6 +24,7 @@ type Props = {
   ring: { lat: number; lon: number } | null;
   onPick: (picked: Picked) => void;
   onLand: (lat: number, lon: number) => void;
+  wind: WindId;
 };
 
 function Wake() {
@@ -77,11 +79,22 @@ const BLAST_RINGS = [
   { miles: 1.5, color: "#d4533a", opacity: 0.18 },
 ] as const;
 
-export function MapCanvas({ layers, focus, ring, onPick, onLand }: Props) {
-  const zones = [...catalog.regions].sort((a, b) => {
-    const rank = { severe: 0, lower: 1, worst: 2 };
-    return rank[a.band] - rank[b.band];
-  });
+export function MapCanvas({ layers, focus, ring, onPick, onLand, wind }: Props) {
+  const zones = useMemo(
+    () =>
+      [...catalog.regions]
+        .map((zone) =>
+          zone.kind === "fallout"
+            ? { ...zone, ring: shapeFallout(zone.id, zone.ring, wind) }
+            : zone,
+        )
+        .sort((a, b) => {
+          const rank = { severe: 0, lower: 1, worst: 2 };
+          return rank[a.band] - rank[b.band];
+        }),
+    [wind],
+  );
+  const windLabel = windById(wind).short;
 
   return (
     <MapContainer
@@ -138,7 +151,7 @@ export function MapCanvas({ layers, focus, ring, onPick, onLand }: Props) {
                   {zone.band === "lower"
                     ? "Lower relative exposure"
                     : zone.band === "severe"
-                      ? "Fallout corridor"
+                      ? `Fallout fan · ${windLabel}`
                       : "Worst ground"}
                 </Popup>
               </Polygon>

@@ -34,4 +34,4 @@ The dev server listens on port 8080.
 - Aim points are compiled in `src/data/catalog.ts` from a 2025 full-scale target list.
 - State outlines are `src/data/us-states.json`.
 - Shelter dots are a snapshot, not a live feed. They go stale.
-- Fallout fans assume a normal west wind. A different wind moves them.
+- Fallout fans follow the wind you pick. Usual winter is west to west-northwest. A weaker summer wind is the same direction, about half as far. A south wind turns the fans north. None of these is a forecast.
