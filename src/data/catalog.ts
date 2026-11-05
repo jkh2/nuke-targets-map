@@ -3964,7 +3964,7 @@ export const catalog: Catalog = {
       "name": "F.E. Warren missile field",
       "band": "worst",
       "kind": "target-zone",
-      "why": "The third Minuteman wing, centered on Cheyenne and spread across southeast Wyoming, the Nebraska panhandle, and northern Colorado. Northern Colorado here is not the San Luis Valley.",
+      "why": "The third Minuteman wing, centered on Cheyenne and spread across southeast Wyoming, the Nebraska panhandle, and northern Colorado.",
       "ring": [
         [
           41.35,
@@ -4989,7 +4989,7 @@ export const catalog: Catalog = {
       "name": "Colorado Springs command complex",
       "band": "worst",
       "kind": "target-zone",
-      "why": "Cheyenne Mountain, Peterson, and the Air Force Academy / NORAD cluster. Highest-priority military node in Colorado. The San Luis Valley is a long way south of here and is not part of this zone.",
+      "why": "Cheyenne Mountain and the Air Force Academy / NORAD cluster. Highest-priority military node in Colorado. The marked zone is the Colorado Springs area, not the rest of the state.",
       "ring": [
         [
           38.82,
@@ -5809,7 +5809,7 @@ export const catalog: Catalog = {
       "name": "San Luis Valley",
       "band": "lower",
       "kind": "relative",
-      "why": "No primary, secondary, or tertiary aim point in the valley in this target list. Nearest primary is Cheyenne Mountain, well northeast. It is also off the main Warren fallout fan, which runs east across the plains, not south into the valley. Lower relative exposure is not safety: a wind shift, a later city strike, or infrastructure collapse still matters. La Jara has a Red Cross shelter reported open on this snapshot \u2014 that is an ordinary disaster shelter, not a fallout bunker.",
+      "why": "No listed aim point inside this high valley. The nearest primary on the list is the Colorado Springs command complex, well to the northeast. The Warren missile-field fallout fan runs east across the plains, not south into the valley. Quieter on this list is not safety.",
       "ring": [
         [
           37.05,

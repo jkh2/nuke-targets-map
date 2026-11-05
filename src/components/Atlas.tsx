@@ -36,12 +36,12 @@ const PRESETS = {
 } satisfies Record<string, Layers>;
 
 const SUGGESTED = [
-  ["Antonito", "CO"],
+  ["New York", "NY"],
+  ["Los Angeles", "CA"],
+  ["Chicago", "IL"],
+  ["Houston", "TX"],
   ["Great Falls", "MT"],
-  ["Omaha", "NE"],
-  ["Ashburn", "VA"],
-  ["Juneau", "AK"],
-  ["St. George", "UT"],
+  ["Seattle", "WA"],
 ] as const;
 
 function bandClass(band: Assessment["band"]): string {
@@ -110,9 +110,10 @@ export function Atlas() {
           <p className="eyebrow">Relative exposure atlas</p>
           <h1>Clear Ground</h1>
           <p className="lede">
-            A picture of a bad hit on the United States: where the aim points are,
-            where the fallout usually goes, and which places are quieter. Quieter
-            is not safe.
+            For anyone in the United States. Search your town, or click where you
+            are. The map shows the aim points on this list, where fallout usually
+            travels, and which ground is quieter. Quieter is not safe, and the
+            time to be on quieter ground is before a crisis, not after the flashes.
           </p>
         </header>
 
@@ -213,9 +214,10 @@ export function Atlas() {
           <section className="verdict band-moderate">
             <h2>Check the ground, then decide</h2>
             <p>
-              Search a town, or click empty map. The reading uses distance to the
-              aim points in this list and whether you sit in a fallout fan drawn
-              for a normal west wind.
+              Search your town, or click the map. The reading is distance from
+              your spot to the aim points on this list, and whether that spot sits
+              in a fallout fan drawn for a normal west wind.
+
             </p>
           </section>
         )}
@@ -279,9 +281,11 @@ export function Atlas() {
         <section>
           <h3>Lower relative exposure</h3>
           <p className="fine">
-            These boxes have no aim point from the list inside them, and they sit
-            off the main silo-fallout fan. They are the places I would rather
-            already be. I would not start driving toward them.
+            These boxes have no aim point from this list inside them, and they sit
+            off the main silo-fallout fan. They are quieter places to already be.
+            They are not a destination to drive toward once an attack has started.
+            If you can choose where to be, choose before anything happens, and
+            then stay put.
           </p>
           <ul className="place-list">
             {lower.map((region) => (
@@ -339,7 +343,7 @@ export function Atlas() {
 
         <footer className="fine colophon">
           Aim points come from the 2025 full-scale target list loaded for this
-          atlas ({catalog.targets.length} sites). Data centers are public
+          atlas ({catalog.targets.length} sites). It is for wherever you are, not for one region. Data centers are public
           commercial clusters, not a classified inventory. Fallout fans are a
           west-to-east simplification, not a forecast. Shelter dots are a snapshot
           of {catalog.shelterSource}. This is a planning picture, not a prediction
