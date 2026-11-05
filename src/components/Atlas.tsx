@@ -304,7 +304,13 @@ export function Atlas() {
             triangles against a carpet of dots. The carpet on the plains is the
             silo fields. Those dots are not copied here.
           </p>
-          <p className="fine">Fallout wind. The fans turn. This is not a forecast.</p>
+          <p className="fine">
+            Fallout wind. The fans are the usual direction, not a forecast. A 2021
+            picture of the silo fields, using that year's weather, shows the worst
+            day at each place: heaviest on the plains just downwind, lighter by the
+            East Coast, and light west of the fields. That envelope is wider than
+            these fans. One day can also throw a lobe south off Wyoming.
+          </p>
           <div className="presets">
             {WINDS.map((item) => (
               <button
