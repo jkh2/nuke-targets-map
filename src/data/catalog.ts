@@ -4676,7 +4676,7 @@ export const catalog: Catalog = {
       "name": "Downwind of Malmstrom",
       "band": "severe",
       "kind": "fallout",
-      "why": "Most probable fallout from ground bursts on the Malmstrom field. Upper winds over Montana are from the west or west-northwest on most days, strongest in winter, so the heavy dust goes east to east-southeast across the Dakotas. Pierre, Sioux Falls, and Fargo sit in this sector. Minneapolis is downwind of Minot on the same wind. A north or south wind on the day moves it. This is the usual pattern, not a forecast.",
+      "why": "Ground bursts on the Malmstrom field. On the usual winter wind the heavy dust goes east to east-southeast across the Dakotas. Pierre, Sioux Falls, and Fargo sit here. Minneapolis is downwind of Minot. Another wind moves it.",
       "ring": [
         [
           47.5322,
@@ -4857,7 +4857,7 @@ export const catalog: Catalog = {
       "name": "Downwind of Minot",
       "band": "severe",
       "kind": "fallout",
-      "why": "Most probable fallout from ground bursts on the Minot field. The same west to west-northwest wind carries it across eastern North Dakota into Minnesota. The southern shoulder reaches eastern South Dakota. Farther east, into Wisconsin, is the long tip of a strong winter wind, not a sure thing.",
+      "why": "Ground bursts on the Minot field. On the usual winter wind the dust crosses eastern North Dakota into Minnesota. Wisconsin is the long tip of a strong winter wind, not a sure thing.",
       "ring": [
         [
           48.3474,
@@ -5038,7 +5038,7 @@ export const catalog: Catalog = {
       "name": "Downwind of Warren",
       "band": "severe",
       "kind": "fallout",
-      "why": "Most probable fallout from ground bursts on the Warren field. The usual upper wind takes it east across Nebraska and Iowa, with an east-southeast shoulder across northern Kansas and Kansas City. Omaha is in this picture as well as being a command site. Chicago and St. Louis are beyond the heavy part of the usual sector.",
+      "why": "Ground bursts on the Warren field. On the usual winter wind the dust crosses Nebraska and Iowa, with a shoulder across northern Kansas and Kansas City. Omaha is in this picture and is also a command site. Chicago is the long-end fan. St. Louis is south of it.",
       "ring": [
         [
           41.1969,
@@ -5219,7 +5219,7 @@ export const catalog: Catalog = {
       "name": "Chicago and Michigan",
       "band": "severe",
       "kind": "fallout",
-      "why": "The long end of the usual wind. Upper winds from the west or west-northwest, strongest in winter, carry the Minot and Malmstrom ground-burst dust east to east-southeast. Past Wisconsin that sector crosses Chicago and both peninsulas of Michigan. This is farther than the Dakotas, so the dose is less certain, but it is the same direction, not a separate guess. Cleveland and Toronto sit past the end of this sector.",
+      "why": "The long end of the usual winter wind, past Wisconsin into Chicago and both peninsulas of Michigan. Farther than the Dakotas, so less certain. Cleveland and Toronto are past the end.",
       "ring": [
         [
           47.0277,
@@ -6480,7 +6480,7 @@ export const catalog: Catalog = {
       "name": "Southern Utah",
       "band": "lower",
       "kind": "relative",
-      "why": "Canyon country south of the Wasatch. Salt Lake and Hill Air Force Base are the Utah problems, both well north. Not downwind of the missile fields on a normal west wind.",
+      "why": "Canyon country south of the Wasatch. Salt Lake and Hill Air Force Base are well north. Not downwind of the missile fields on the usual winter wind.",
       "ring": [
         [
           37.05,

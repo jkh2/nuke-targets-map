@@ -123,9 +123,7 @@ export function Atlas() {
           <p className="eyebrow">Relative exposure atlas</p>
           <h1>Clear Ground</h1>
           <p className="lede">
-            Search your town, or click where you are. The reading says what kind of
-            danger that spot is in, and the closest safer ground on this map.
-            Quieter is not safe. Be there before a crisis, not after the flashes.
+            Search your town, or click where you are.
           </p>
           <p className="caveat">
             This list is compiled, not official. A quiet reading can mean we left
@@ -246,7 +244,7 @@ export function Atlas() {
                 {reading.primaryLine ? <p>{reading.primaryLine}</p> : null}
                 {reading.quieter ? (
                   <p>
-                    <strong>Closer safer ground.</strong> {reading.quieter.line}
+                    <strong>Quieter ground.</strong> {reading.quieter.line}
                   </p>
                 ) : null}
               </div>
@@ -257,27 +255,23 @@ export function Atlas() {
                 </p>
                 {reading.quieter ? (
                   <p>
-                    <strong>Closer safer ground.</strong> {reading.quieter.line}
+                    <strong>Quieter ground.</strong> {reading.quieter.line}
                   </p>
                 ) : null}
               </div>
             )}
-            <p>{reading.summary}</p>
-            <ul>
-              {reading.reasons.slice(0, 5).map((reason) => (
-                <li key={reason}>{reason}</li>
-              ))}
-            </ul>
+            {reading.reasons.length > 0 ? (
+              <ul>
+                {reading.reasons.slice(0, 3).map((reason) => (
+                  <li key={reason}>{reason}</li>
+                ))}
+              </ul>
+            ) : null}
           </section>
         ) : (
           <section className="verdict band-moderate">
-            <h2>Check the ground, then decide</h2>
-            <p>
-              Search your town, or click the map. You get three things: how close
-              the nearest listed site is, whether you are in a fallout fan for the
-              wind you picked, and the closest safer ground on this map.
-
-            </p>
+            <h2>Check a place</h2>
+            <p>Search a town, or click the map.</p>
           </section>
         )}
 
@@ -331,38 +325,28 @@ export function Atlas() {
         <section>
           <h3>Why a place is on the map</h3>
           <p className="fine">
-            The biggest cities are not the first thing this map cares about. A
-            place is listed because of what it means for the person standing near
-            it. This is for reading your own ground. It is not a plan.
+            For reading where you stand. Not a plan.
           </p>
           <ol className="strike-order">
             <li>
-              <strong>Near something that can still shoot back.</strong> The red
-              points are missile fields, the two ballistic-missile submarine
-              bases, bomber bases, command posts, and the radios that reach
-              submarines. If you live near one, you are near an opening-strike
-              site. The silos are buried, so bursts there are on the ground, and
-              ground bursts are the long fallout. That is why the fans start at
-              the missile fields, not at the cities.
+              <strong>Near something that can still shoot back.</strong> Red
+              points: missile fields, the two submarine bases, bomber bases,
+              command posts, and the submarine radios. Buried silos mean ground
+              bursts, and those are the long fallout. The fans start there, not
+              at the cities.
             </li>
             <li>
               <strong>Near a plant that builds weapons.</strong> Los Alamos,
-              Livermore, Oak Ridge, Savannah River, Hanford, the Kansas City
-              weapons plant, and Pantex. These are not cities. They are on the
-              map so a town next to one is not scored as quiet.
+              Livermore, Oak Ridge, Savannah River, Hanford, Kansas City, and
+              Pantex. A town next to one is not quiet.
             </li>
             <li>
-              <strong>Near a base, a port, or a dam.</strong> Large Army and
-              Marine posts, airlift bases, the Port of New York and New Jersey,
-              and dams that cannot be replaced quickly. Close to one of these is
-              a different problem from living downwind of a missile field.
+              <strong>Near a base, a port, or a dam.</strong> Different from
+              living downwind of a missile field.
             </li>
             <li>
-              <strong>In a city, which is the later picture.</strong> New York,
-              Los Angeles, Chicago, and the other city markers are not the
-              opening picture. Living in one is quiet if a strike stays on the
-              weapons. It is a poor bet if the war has become an attempt to break
-              the country.
+              <strong>In a city.</strong> Not the opening picture. It matters if
+              the war spreads past the weapons.
             </li>
           </ol>
         </section>
@@ -392,10 +376,8 @@ export function Atlas() {
         <section>
           <h3>Lower relative exposure</h3>
           <p className="fine">
-            These boxes have fewer aim points on this list, and they sit off the
-            main silo-fallout fan on the usual wind. Each one has a cost: water,
-            winter, medicine, or a road. They are places to already be. They are
-            not a drive to start after the flashes.
+            Fewer listed sites, and off the main fan on the usual winter wind.
+            Each box has a cost. A place to already be, not a drive after the flashes.
           </p>
           <ul className="place-list">
             {lower.map((region) => (
@@ -421,12 +403,8 @@ export function Atlas() {
         <section>
           <h3>Ordinary shelters, not bunkers</h3>
           <p className="fine">
-            FEMA's National Shelter System listed {catalog.shelters.length} shelters
-            open on {catalog.shelterSnapshot}. They are Red Cross and local
-            disaster shelters, synced for ordinary emergencies. The United States
-            does not publish a standing public fallout-shelter network. Cold War
-            shelter signs are not maintained space. Do not treat a green ring as
-            a bunker.
+            {catalog.shelters.length} ordinary shelters listed open on {catalog.shelterSnapshot}.
+            Not fallout bunkers.
           </p>
           <ul className="place-list">
             {catalog.shelters.map((shelter) => (
@@ -454,15 +432,9 @@ export function Atlas() {
         ) : null}
 
         <footer className="fine colophon">
-          Aim points come from the 2025 full-scale target list loaded for this
-          atlas ({catalog.targets.length} sites). It is for wherever you are, not for one region. Data centers are public
-          commercial clusters, not a classified inventory. Fallout fans follow the
-          wind you pick. Usual winter is west to west-northwest, dust east to
-          east-southeast, including Chicago and Michigan. A weaker summer wind
-          does not travel as far. A south wind turns the fans north. They are not
-          a forecast. Shelter dots stay off until you ask for them, and they are
-          ordinary disaster shelters, not bunkers. This is a planning picture, not
-          a prediction and not official guidance.
+          A compiled list, not an official one. The fans follow the wind you pick.
+          They are not a forecast. Shelters, if you turn them on, are ordinary
+          disaster shelters. Not a prediction.
         </footer>
       </aside>
       <div className="atlas-stage">

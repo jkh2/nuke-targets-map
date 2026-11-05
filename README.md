@@ -2,11 +2,9 @@
 
 **Live:** [nuke-targets-map.vercel.app](https://nuke-targets-map.vercel.app)
 
-A relative-exposure atlas for anyone in the United States. Search a town or click the map and read that place: aim points on this list, a fallout picture from the three Minuteman fields on the usual west to west-northwest wind, and how that spot compares. It is a way to understand your own position. It is not a plan for one valley, and quieter ground is not safe ground.
+A relative-exposure atlas for anyone in the United States. Search a town or click the map. The reading gives miles to the nearest listed site, whether that danger is blast, fallout, or a later strike, and the nearer quieter ground. Quieter is not safe. The list is compiled, not official.
 
-It shows likely aim points (military, command, ports, energy, logistics, metros), major public data-center clusters, a fallout picture from the three Minuteman fields on the usual west to west-northwest wind, and shelters the FEMA National Shelter System listed as open on 4 November 2026. Search a town or click the map. The reading gives miles to the nearest listed site, a rough 12-mile blast picture for one large burst, and the nearest quieter box. Quieter is not the same as safe, and that box is a place to already be, not a drive to start after the flashes.
-
-This is an open-source planning picture, not a prediction and not official guidance. The United States does not publish a standing public fallout-shelter network. The green rings are ordinary disaster shelters, not bunkers.
+Fallout fans follow the wind you pick. Usual winter is west to west-northwest. A weaker summer wind is the same direction, about half as far. A south wind turns the fans north. None of these is a forecast. Shelter dots stay off until asked for. They are ordinary disaster shelters, not bunkers.
 
 ## Map backgrounds
 

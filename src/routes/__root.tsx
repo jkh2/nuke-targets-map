@@ -14,7 +14,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "A relative-exposure atlas of a bad hit on the United States: aim points, fallout fans, data centers, and shelters that are actually open.",
+          "Where you stand relative to listed aim points, fallout fans, and quieter ground. A compiled picture, not a forecast.",
       },
       { name: "theme-color", content: "#0e1412" },
     ],
